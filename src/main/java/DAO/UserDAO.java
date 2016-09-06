@@ -47,6 +47,8 @@ public class UserDAO {
 	}
 	
 	public static Response addClient(Client client) {
+		client.points = 0;
+		client.suspended = false;
 		BikesDB.getDatastore().save(client);
 		return ResponseBiker.buildResponse(client, Status.OK);
 	}

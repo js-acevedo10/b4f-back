@@ -37,4 +37,8 @@ public class Client extends User {
 		this.suspended = suspended;
 	}
 	
+	@Override
+	public String toString() {
+		return this.id + " - " + this.name;
+	}
 }

@@ -83,12 +83,10 @@ public class BikeDAO {
 	}
 	
 	
-	public static Response addBike(Bike bike, String bikeTypeName) {
+	public static Response addBike(Bike bike, String bikeTypeId) {
 		
 		Datastore datastore = BikesDB.getDatastore();
-		final Query<BikeType> queryBikeType = datastore.createQuery(BikeType.class);
-		queryBikeType.field("name").equal(bikeTypeName);
-		BikeType bikeType = queryBikeType.get();
+		BikeType bikeType = datastore.get(BikeType.class, bikeTypeId);
 		if (bikeType  == null) {
 			jsonMap.clear();
 			jsonMap.put("Error", "BikeType not found");

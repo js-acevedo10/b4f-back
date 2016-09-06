@@ -8,6 +8,8 @@ public class BikeType {
 	@Id
 	public ObjectId id;
 	
+	private String idString;
+	
 	public String name;
     
     public int capacity;
@@ -30,6 +32,7 @@ public class BikeType {
 
 	public void setId(ObjectId id) {
 		this.id = id;
+		this.idString = id.toHexString();
 	}
 
 	public String getName() {
@@ -46,6 +49,14 @@ public class BikeType {
 
 	public void setCapacity(int capacity) {
 		this.capacity = capacity;
+	}
+
+	public String getIdString() {
+		return idString;
+	}
+
+	public void setIdString(String idString) {
+		this.idString = idString;
 	}
 
 }

@@ -32,6 +32,7 @@ public class ClientResource {
 		return UserDAO.getClients();
 	}
 	
+	@Path("/{userId}")
 	@PermitAll
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)

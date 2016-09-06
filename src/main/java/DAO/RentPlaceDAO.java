@@ -66,9 +66,7 @@ public class RentPlaceDAO {
 	
 	public static Response editRentPlace(RentPlace place) {
 		Datastore datastore = BikesDB.getDatastore();
-		final Query<RentPlace> queryPlace = datastore.createQuery(RentPlace.class);
-		queryPlace.field("id").equal(place.getId());
-		RentPlace resultBike = queryPlace.get();
+		RentPlace resultBike = datastore.get(RentPlace.class, place.getId());
 		if (resultBike == null) {
 			jsonMap.clear();
 			jsonMap.put("Error", "Rent Place not found");

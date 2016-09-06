@@ -16,7 +16,7 @@ import DTO.Penalty;
 import Utilities.BikesDB;
 import Utilities.ResponseBiker;
 
-public class PenaltyDao {
+public class PenaltyDAO {
 
 	public static void main(String[] args) {
 //		penalize("juansantiago.acevedocorrea@gmail.com", new Penalty(3500.0, new Date(), new Date(), false));

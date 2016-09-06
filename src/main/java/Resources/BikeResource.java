@@ -2,6 +2,7 @@ package Resources;
 
 import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -11,8 +12,11 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.bson.types.ObjectId;
+
 import DAO.BikeDAO;
 import DTO.Bike;
+import DTO.RentPlace;
 import Security.Roles;
 
 @Path("/bikes")
@@ -55,10 +59,12 @@ public class BikeResource {
 	//-------------------------------------------------------------------
 	
 	@PUT
+	@Path("/{bikeId}")
 	@RolesAllowed(Roles.ADMIN)
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response editBike(Bike bike) {
+	public Response editBike(@PathParam("bikeId") String bikeId,Bike bike)  {
+		bike.setId(new ObjectId(bikeId));
 		return BikeDAO.editBike(bike);
 	}
 
@@ -66,7 +72,7 @@ public class BikeResource {
 	//--------------------------------DELETE-----------------------------
 	//-------------------------------------------------------------------
 	
-	@PUT
+	@DELETE
 	@Path("/{bikeId}")
 	@RolesAllowed(Roles.ADMIN)
 	@Consumes(MediaType.APPLICATION_JSON)

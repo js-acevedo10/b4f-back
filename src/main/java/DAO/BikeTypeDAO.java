@@ -91,8 +91,8 @@ public class BikeTypeDAO {
 		queryBikeType.field("name").equal(bikeType.name);
 		BikeType bikeTypeFound = queryBikeType.get();
 		if (bikeTypeFound  == null) {
-			Key<BikeType> bikeKey = BikesDB.getDatastore().save(bikeType);
-			return ResponseBiker.buildResponse(datastore.getByKey(BikeType.class, bikeKey), Response.Status.OK);
+			datastore.save(bikeType);
+			return getBikeTypes();
 		} else {
 			jsonMap.clear();
 			jsonMap.put("Error", "BikeType name already taken");

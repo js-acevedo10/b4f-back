@@ -34,7 +34,6 @@ public class RentPlaceResource {
 		//-------------------------------------------------------------------
 		
 		@GET
-		@Path("/")
 		@Produces(MediaType.APPLICATION_JSON)
 		public Response getPlaces() {
 			return RentPlaceDAO.getRentPlaces();

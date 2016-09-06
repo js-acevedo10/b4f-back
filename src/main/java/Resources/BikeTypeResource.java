@@ -11,7 +11,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import DAO.BikeTypeDao;
+import DAO.BikeTypeDAO;
 import DTO.BikeType;
 import Security.Roles;
 
@@ -23,11 +23,18 @@ public class BikeTypeResource {
 	//-------------------------------------------------------------------
 	
 	@GET
+	@RolesAllowed({Roles.ADMIN, Roles.MANAGER, Roles.CLIENT})
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getBikeTypes() {
+		return BikeTypeDAO.getBikeTypes();
+	}
+	
+	@GET
 	@Path("/{bikeTypeName}")
 	@RolesAllowed(Roles.ADMIN)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getBikeTypeWithId(@PathParam("bikeTypeName") String bikeTypeName) {
-		return BikeTypeDao.getBikeTypeWithName(bikeTypeName);
+		return BikeTypeDAO.getBikeTypeWithName(bikeTypeName);
 	}
 
 	//-------------------------------------------------------------------
@@ -39,7 +46,7 @@ public class BikeTypeResource {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response addBikeType(BikeType bikeType) {
-		return BikeTypeDao.addBikeType(bikeType);
+		return BikeTypeDAO.addBikeType(bikeType);
 	}
 
 	//-------------------------------------------------------------------
@@ -51,7 +58,7 @@ public class BikeTypeResource {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response editBikeType(BikeType bikeType) {
-		return BikeTypeDao.editBikeType(bikeType);
+		return BikeTypeDAO.editBikeType(bikeType);
 	}
 
 	//-------------------------------------------------------------------
@@ -64,7 +71,7 @@ public class BikeTypeResource {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response deleteBikeType(@PathParam("bikeTypeId") String bikeTypeId) {
-		return BikeTypeDao.deleteBikeType(bikeTypeId);
+		return BikeTypeDAO.deleteBikeType(bikeTypeId);
 	}
 	
 }

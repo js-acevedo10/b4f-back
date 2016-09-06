@@ -15,7 +15,7 @@ import DAO.BikeDAO;
 import DTO.Bike;
 import Security.Roles;
 
-@Path("bikes")
+@Path("/bikes")
 public class BikeResource {
 
 	//-------------------------------------------------------------------

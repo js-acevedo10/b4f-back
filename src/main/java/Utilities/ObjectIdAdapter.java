@@ -17,7 +17,7 @@ import com.google.gson.JsonDeserializer;
 
 public class ObjectIdAdapter {
 
-	private static final GsonBuilder gsonBuilder = new GsonBuilder()
+	public static final GsonBuilder gsonBuilder = new GsonBuilder()
             .setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ")
             .registerTypeAdapter(ObjectId.class, new JsonSerializer<ObjectId>() {
                 @Override

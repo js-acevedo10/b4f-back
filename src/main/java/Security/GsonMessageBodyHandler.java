@@ -19,6 +19,8 @@ import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import Utilities.ObjectIdAdapter;
+
 public class GsonMessageBodyHandler implements MessageBodyWriter<Object>,
 		MessageBodyReader<Object> {
 	private static final String UTF_8 = "UTF-8";
@@ -28,7 +30,7 @@ public class GsonMessageBodyHandler implements MessageBodyWriter<Object>,
 	//Esto es para poder modificar la manera de leer los JSON (A veces es bien útil)
 	private Gson getGson() {
 		if (gson == null) {
-			final GsonBuilder gsonBuilder = new GsonBuilder();
+			final GsonBuilder gsonBuilder = ObjectIdAdapter.gsonBuilder;
 			gson = gsonBuilder.disableHtmlEscaping()
 					.setFieldNamingPolicy(FieldNamingPolicy.UPPER_CAMEL_CASE)
 					.setPrettyPrinting()

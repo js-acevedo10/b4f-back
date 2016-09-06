@@ -6,10 +6,8 @@ import org.mongodb.morphia.annotations.Id;
 public class BikeType {
 	
 	@Id
-	public ObjectId id;
-	
-	private String idString;
-	
+	public String id;
+		
 	public String name;
     
     public int capacity;
@@ -27,12 +25,11 @@ public class BikeType {
 	}
 
 	public String getId() {
-		return id.toHexString();
+		return id;
 	}
 
-	public void setId(ObjectId id) {
+	public void setId(String id) {
 		this.id = id;
-		this.idString = id.toHexString();
 	}
 
 	public String getName() {
@@ -49,14 +46,6 @@ public class BikeType {
 
 	public void setCapacity(int capacity) {
 		this.capacity = capacity;
-	}
-
-	public String getIdString() {
-		return idString;
-	}
-
-	public void setIdString(String idString) {
-		this.idString = id.toHexString();
 	}
 
 }

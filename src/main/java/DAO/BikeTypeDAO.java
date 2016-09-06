@@ -8,6 +8,7 @@ import javax.ws.rs.core.Response;
 
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.Datastore;
+import org.mongodb.morphia.Key;
 import org.mongodb.morphia.query.Query;
 
 import com.google.gson.Gson;
@@ -90,8 +91,8 @@ public class BikeTypeDAO {
 		queryBikeType.field("name").equal(bikeType.name);
 		BikeType bikeTypeFound = queryBikeType.get();
 		if (bikeTypeFound  == null) {
-			BikesDB.getDatastore().save(bikeType);
-			return ResponseBiker.buildResponse(bikeType, Response.Status.OK);
+			Key<BikeType> bikeKey = BikesDB.getDatastore().save(bikeType);
+			return ResponseBiker.buildResponse(datastore.getByKey(BikeType.class, bikeKey), Response.Status.OK);
 		} else {
 			jsonMap.clear();
 			jsonMap.put("Error", "BikeType name already taken");

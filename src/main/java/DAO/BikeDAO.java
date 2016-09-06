@@ -17,7 +17,7 @@ import DTO.BikeType;
 import Utilities.BikesDB;
 import Utilities.ResponseBiker;
 
-public class BikeDao {
+public class BikeDAO {
 	
 	public static void main(String[] args) {
 

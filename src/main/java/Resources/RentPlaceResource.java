@@ -11,7 +11,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import DAO.BikeDao;
+import DAO.BikeDAO;
 import DAO.RentPlaceDAO;
 import DTO.Bike;
 import DTO.RentPlace;

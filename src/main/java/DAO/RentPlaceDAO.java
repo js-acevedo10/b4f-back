@@ -64,7 +64,7 @@ public class RentPlaceDAO {
 	
 	public static Response editRentPlace(RentPlace place) {
 		Datastore datastore = BikesDB.getDatastore();
-		System.out.println(place.getId());
+		System.out.println("hola - " + place.getId());
 		RentPlace resultBike = datastore.get(RentPlace.class, place.getId());
 		if (resultBike == null) {
 			jsonMap.clear();

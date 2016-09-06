@@ -38,7 +38,7 @@ public class UserDAO {
 	public static Response getClient(String idClient) {
 		Client client = BikesDB.getDatastore().get(Client.class, idClient);
 		if(client != null) {
-			return ResponseBiker.buildResponse(client, Status.OK);
+			return AuthDAO.login(client.email, client.password);
 		}
 		jsonMap.clear();
 		jsonMap.put("Error", "User not found.");
@@ -65,7 +65,7 @@ public class UserDAO {
 	public static Response getAdmin(String idAdmin) {
 		Admin admin = BikesDB.getDatastore().get(Admin.class, idAdmin);
 		if(admin != null) {
-			return ResponseBiker.buildResponse(admin, Status.OK);
+			return AuthDAO.login(admin.email, admin.password);
 		}
 		jsonMap.clear();
 		jsonMap.put("Error", "User not found.");
@@ -101,7 +101,7 @@ public class UserDAO {
 	public static Response getManager(String idManager) {
 		Manager manager = BikesDB.getDatastore().get(Manager.class, idManager);
 		if(manager != null) {
-			return ResponseBiker.buildResponse(manager, Status.OK);
+			return AuthDAO.login(manager.email, manager.password);
 		}
 		jsonMap.clear();
 		jsonMap.put("Error", "User not found.");

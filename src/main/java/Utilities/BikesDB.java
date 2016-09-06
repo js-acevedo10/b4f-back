@@ -1,8 +1,11 @@
 package Utilities;
 
+import org.bson.types.ObjectId;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.Morphia;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 
@@ -14,6 +17,7 @@ public class BikesDB {
 	final static Morphia morphia = new Morphia();
 	static Datastore datastore;
 	static Boolean c = false;
+	static Gson gson;
 	
 	public static Datastore getDatastore() {
 		if(datastore == null) {
@@ -25,4 +29,11 @@ public class BikesDB {
 		datastore.ensureIndexes();
 		return datastore;
 	}
+	
+//	public static Gson gsonParser() {
+//		if (gson == null){
+//			return new GsonBuilder().registerTypeAdapter(ObjectId.class, new ObjectIdAdapter()).create();
+//		}
+//	    return gson;
+//	}
 }

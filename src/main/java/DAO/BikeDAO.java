@@ -6,8 +6,10 @@ import java.util.Map;
 
 import javax.ws.rs.core.Response;
 
+import org.bson.Document;
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.Datastore;
+import org.mongodb.morphia.Key;
 import org.mongodb.morphia.query.Query;
 
 import com.google.gson.Gson;
@@ -86,15 +88,21 @@ public class BikeDAO {
 	public static Response addBike(Bike bike, String bikeTypeId) {
 		
 		Datastore datastore = BikesDB.getDatastore();
-		BikeType bikeType = datastore.get(BikeType.class, bikeTypeId);
+		System.out.println(bikeTypeId);
+		BikeType bikeType = datastore.createQuery(BikeType.class).
+				field("_id").equal(new ObjectId(bikeTypeId)).get();
+		System.out.println(bikeType);
 		if (bikeType  == null) {
 			jsonMap.clear();
 			jsonMap.put("Error", "BikeType not found");
 			String error = g.toJson(jsonMap);
 			return ResponseBiker.buildResponse(error, Response.Status.NOT_FOUND);
 		} else {
-			BikesDB.getDatastore().save(bike);
+			datastore.save(bike);
+			bike = datastore.createQuery(Bike.class).
+					field("_id").equal(bike.getId()).get();
 			bike.setBikeType(bikeType);
+			datastore.save(bike);
 			return getBikes();
 		}
 	}

@@ -6,7 +6,7 @@ import org.mongodb.morphia.annotations.Id;
 public class BikeType {
 	
 	@Id
-	public String id;
+	public ObjectId id;
 		
 	public String name;
     
@@ -24,11 +24,11 @@ public class BikeType {
 		this.capacity = capacity;
 	}
 
-	public String getId() {
+	public ObjectId getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(ObjectId id) {
 		this.id = id;
 	}
 

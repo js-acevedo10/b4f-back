@@ -17,6 +17,7 @@ import com.google.gson.JsonParser;
 import DTO.Bike;
 import DTO.BikeType;
 import Utilities.BikesDB;
+import Utilities.ObjectIdAdapter;
 import Utilities.ResponseBiker;
 
 public class BikeTypeDAO {
@@ -64,7 +65,7 @@ public class BikeTypeDAO {
 			String error = g.toJson(jsonMap);
 			return ResponseBiker.buildResponse(error, Response.Status.NOT_FOUND);
 		} else {
-			return ResponseBiker.buildResponse(types, Response.Status.OK);
+			return ResponseBiker.buildResponse(ObjectIdAdapter.getGson().toJson(types), Response.Status.OK);
 		}
 	}
 	

@@ -97,7 +97,7 @@ public class BikeDAO {
 		} else {
 			BikesDB.getDatastore().save(bike);
 			bike.setBikeType(bikeType);
-			return ResponseBiker.buildResponse(bike, Response.Status.OK);
+			return getBikes();
 		}
 	}
 	

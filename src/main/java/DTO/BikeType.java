@@ -24,8 +24,8 @@ public class BikeType {
 		this.capacity = capacity;
 	}
 
-	public ObjectId getId() {
-		return id;
+	public String getId() {
+		return id.toHexString();
 	}
 
 	public void setId(ObjectId id) {

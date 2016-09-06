@@ -10,7 +10,7 @@ import javax.ws.rs.core.Response;
 
 import org.bson.Document;
 
-import DAO.AuthDao;
+import DAO.AuthDAO;
 
 @Path("/auth")
 public class AuthResource {
@@ -31,7 +31,7 @@ public class AuthResource {
 	public static Response login(Document credentials) {
 		String username = credentials.getString("username");
 		String password = credentials.getString("password");
-		return AuthDao.login(username, password);
+		return AuthDAO.login(username, password);
 	}
 	
 	//-------------------------------------------------------------------

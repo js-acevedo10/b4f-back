@@ -15,7 +15,7 @@ import javax.ws.rs.core.Response;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 
-import DAO.AuthDao;
+import DAO.AuthDAO;
 import DAO.PenaltyDAO;
 import DTO.Penalty;
 import Security.Roles;

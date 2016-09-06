@@ -19,6 +19,8 @@ import javax.ws.rs.ext.Provider;
  
 import org.glassfish.jersey.internal.util.Base64;
 
+import DAO.AuthDAO;
+
 @Provider
 public class AuthenticationFilter implements javax.ws.rs.container.ContainerRequestFilter {
     @Context
@@ -85,7 +87,7 @@ public class AuthenticationFilter implements javax.ws.rs.container.ContainerRequ
         }
     }
     private boolean isUserAllowed(final String username, final String password, final Set<String> rolesSet) {
-    	String userRole = ""; //TODO: conectar con la base de datos para pedir el rol del usuario, también podríamos pasarlo por header encriptado
+    	String userRole = AuthDAO.getUserRole(username, password);
         return rolesSet.contains(userRole);
     }
 }

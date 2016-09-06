@@ -16,10 +16,11 @@ import com.google.gson.JsonParser;
 import DTO.Admin;
 import DTO.Client;
 import DTO.Manager;
+import Security.Roles;
 import Utilities.BikesDB;
 import Utilities.ResponseBiker;
 
-public class AuthDao {
+public class AuthDAO {
 	
 	public static void main(String[] args) {
 		System.out.println(login("juansantiago.acevedocorrea@gmail.com", "1234567").getEntity().toString());
@@ -88,6 +89,41 @@ public class AuthDao {
 			resp.put("points", client.getPoints());
 			resp.put("suspended", client.isSuspended());
 			return ResponseBiker.buildResponse(resp, Response.Status.OK);
+		}
+	}
+	
+	public static String getUserRole(String username, String password) {
+		Datastore datastore = BikesDB.getDatastore();
+		final Query<Client> queryClient = datastore.createQuery(Client.class);
+		queryClient.and(
+			queryClient.criteria("email").equal(username),
+			queryClient.criteria("password").equal(password)
+		);
+		Client client = queryClient.get();
+		if(client == null) {
+			final Query<Manager> queryManager = datastore.createQuery(Manager.class);
+			queryManager.and(
+				queryManager.criteria("email").equal(username),
+				queryManager.criteria("password").equal(password)
+			);
+			Manager manager = queryManager.get();
+			if(manager == null) {
+				final Query<Admin> queryAdmin = datastore.createQuery(Admin.class);
+				queryAdmin.and(
+					queryAdmin.criteria("email").equal(username),
+					queryAdmin.criteria("password").equal(password)
+				);
+				Admin admin = queryAdmin.get();
+				if(admin == null) {
+					return "unknown";
+				} else {
+					return Roles.ADMIN;
+				}
+			} else {
+				return Roles.MANAGER;
+			}
+		} else {
+			return Roles.CLIENT;
 		}
 	}
 }

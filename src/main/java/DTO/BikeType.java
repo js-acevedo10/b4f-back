@@ -56,7 +56,7 @@ public class BikeType {
 	}
 
 	public void setIdString(String idString) {
-		this.idString = idString;
+		this.idString = id.toHexString();
 	}
 
 }

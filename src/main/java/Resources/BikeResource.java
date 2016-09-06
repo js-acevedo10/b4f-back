@@ -23,6 +23,13 @@ public class BikeResource {
 	//-------------------------------------------------------------------
 	
 	@GET
+	@RolesAllowed({Roles.ADMIN, Roles.MANAGER})
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getBikes() {
+		return BikeDAO.getBikes();
+	}
+	
+	@GET
 	@Path("/{bikeId}")
 	@RolesAllowed(Roles.ADMIN)
 	@Produces(MediaType.APPLICATION_JSON)

@@ -1,6 +1,7 @@
 package DAO;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.ws.rs.core.Response;
@@ -53,6 +54,18 @@ public class BikeDAO {
 	public static Map<String, String> jsonMap = new HashMap<String, String>();
 	public static Gson g = new Gson();
 	
+	public static Response getBikes() {
+		Datastore datastore = BikesDB.getDatastore();
+		List<Bike> bikes = datastore.createQuery(Bike.class).asList();
+		if (bikes  == null) {
+			jsonMap.clear();
+			jsonMap.put("Error", "Error fetching bikes");
+			String error = g.toJson(jsonMap);
+			return ResponseBiker.buildResponse(error, Response.Status.NOT_FOUND);
+		} else {
+			return ResponseBiker.buildResponse(bikes, Response.Status.OK);
+		}
+	}
 	
 	public static Response getBikeWithId(String bikeId) {
 		Datastore datastore = BikesDB.getDatastore();

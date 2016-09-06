@@ -84,7 +84,7 @@ public class RentPlaceResource {
 		@Consumes(MediaType.APPLICATION_JSON)
 		@Produces(MediaType.APPLICATION_JSON)
 		public Response editPlace(@PathParam("placeId") String placeId, RentPlace place) {
-//			place.setId(new ObjectId(placeId));
+			place.setId(new ObjectId(placeId));
 			return RentPlaceDAO.editRentPlace(place);
 		}
 

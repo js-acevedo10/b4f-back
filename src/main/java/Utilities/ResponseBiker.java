@@ -29,6 +29,7 @@ public class ResponseBiker {
 	 * @return la respuesta lista para ser enviada
 	 */
 	public static Response buildResponse(Object respuesta, Response.Status status) {
+		respuesta = ObjectIdAdapter.getGson().toJson(respuesta);
 		return Response.status(status).entity(respuesta).header("Access-Control-Allow-Headers", HEADERS)
 				.header("Access-Control-Allow-Origin", ORIGIN)
 				.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, HEAD, OPTIONS").build();

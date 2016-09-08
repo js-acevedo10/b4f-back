@@ -1,6 +1,5 @@
 package Resources;
 
-import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -12,10 +11,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import org.bson.Document;
 import org.bson.types.ObjectId;
 
-import DAO.AuthDAO;
 import DAO.PenaltyDAO;
 import DTO.Penalty;
 import Security.Roles;

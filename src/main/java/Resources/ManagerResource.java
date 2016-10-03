@@ -25,11 +25,17 @@ public class ManagerResource {
 
 	@RolesAllowed({Roles.ADMIN, Roles.MANAGER})
 	@Path("/{userId}")
-	@PermitAll
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getManager(@PathParam("managerId") String userId) {
 		return UserDAO.getManager(userId);
+	}
+	
+	@RolesAllowed({Roles.ADMIN})
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getManagers() {
+		return UserDAO.getManager();
 	}
 
 	//------------------------------------------------

@@ -1,5 +1,6 @@
 package Resources;
 
+import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -27,7 +28,7 @@ public class BikeResource {
 	//-------------------------------------------------------------------
 	
 	@GET
-	@RolesAllowed({Roles.ADMIN, Roles.MANAGER})
+	@PermitAll
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getBikes() {
 		return BikeDAO.getBikes();

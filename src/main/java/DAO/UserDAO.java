@@ -73,6 +73,17 @@ public class UserDAO {
 		return ResponseBiker.buildResponse(error, Status.NOT_FOUND);
 	}
 	
+	public static Response getAdmin() {
+		List<Admin> managers = BikesDB.getDatastore().createQuery(Admin.class).asList();
+		if(managers != null && !managers.isEmpty()) {
+			return ResponseBiker.buildResponse(managers, Status.OK);
+		}
+		jsonMap.clear();
+		jsonMap.put("Error", "Users not found.");
+		String error = g.toJson(jsonMap);
+		return ResponseBiker.buildResponse(error, Status.NOT_FOUND);
+	}
+	
 	public static Response addAdmin(Admin admin) {
 		BikesDB.getDatastore().save(admin);
 		return AuthDAO.login(admin.email, admin.password);

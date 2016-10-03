@@ -27,11 +27,17 @@ public static final String KEY = "ADMIN";
 	
 	@RolesAllowed(Roles.ADMIN)
 	@Path("/{userId}")
-	@PermitAll
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getAdmin(@PathParam("adminId") String userId) {
 		return UserDAO.getAdmin(userId);
+	}
+	
+	@RolesAllowed(Roles.ADMIN)
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getAdmin() {
+		return UserDAO.getAdmin();
 	}
 	
 	//------------------------------------------------

@@ -57,6 +57,22 @@ public class UserDAO {
 		BikesDB.getDatastore().save(client);
 		return ResponseBiker.buildResponse(client, Status.OK);
 	}
+	
+	public static Response removeClient(String idClient) {
+		Client client = BikesDB.getDatastore().get(Client.class, idClient);
+		if(client != null) {
+			if (BikesDB.getDatastore().delete(client).getN() > 0){
+				jsonMap.clear();
+				jsonMap.put("Succes", "User removed.");
+				String callback = g.toJson(jsonMap);
+				return ResponseBiker.buildResponse(callback, Status.OK);
+			}
+		}
+		jsonMap.clear();
+		jsonMap.put("Error", "User not found.");
+		String error = g.toJson(jsonMap);
+		return ResponseBiker.buildResponse(error, Status.NOT_FOUND);
+	}
 
 	//------------------------------------------------------------------------
 	//---------------------------------ADMIN----------------------------------
@@ -128,5 +144,21 @@ public class UserDAO {
 	public static Response updateManager(Manager manager) {
 		BikesDB.getDatastore().save(manager);
 		return ResponseBiker.buildResponse(manager, Status.OK);
+	}
+	
+	public static Response removeManager(String idManager) {
+		Manager manager = BikesDB.getDatastore().get(Manager.class, idManager);
+		if(manager != null) {
+			if (BikesDB.getDatastore().delete(manager).getN() > 0){
+				jsonMap.clear();
+				jsonMap.put("Succes", "User removed.");
+				String callback = g.toJson(jsonMap);
+				return ResponseBiker.buildResponse(callback, Status.OK);
+			}
+		}
+		jsonMap.clear();
+		jsonMap.put("Error", "User not found.");
+		String error = g.toJson(jsonMap);
+		return ResponseBiker.buildResponse(error, Status.NOT_FOUND);
 	}
 }

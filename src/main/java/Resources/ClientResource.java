@@ -3,6 +3,7 @@ package Resources;
 import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -68,4 +69,11 @@ public class ClientResource {
 	//----------------------DELETE--------------------
 	//------------------------------------------------
 	
+	@Path("/{userId}")
+	@RolesAllowed({Roles.ADMIN})
+	@DELETE
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response removeClient(@PathParam("userId") String userId) {
+		return UserDAO.removeClient(userId);
+	}
 }

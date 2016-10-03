@@ -7,6 +7,8 @@ import java.util.Map;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
+import org.bson.types.ObjectId;
+
 import com.google.gson.Gson;
 
 import DTO.Admin;
@@ -36,7 +38,7 @@ public class UserDAO {
 	}
 	
 	public static Response getClient(String idClient) {
-		Client client = BikesDB.getDatastore().get(Client.class, idClient);
+		Client client = BikesDB.getDatastore().get(Client.class, new ObjectId(idClient));
 		if(client != null) {
 			return ResponseBiker.buildResponse(client, Status.OK);
 		}
@@ -59,7 +61,7 @@ public class UserDAO {
 	}
 	
 	public static Response removeClient(String idClient) {
-		Client client = BikesDB.getDatastore().get(Client.class, idClient);
+		Client client = BikesDB.getDatastore().get(Client.class, new ObjectId(idClient));
 		if(client != null) {
 			if (BikesDB.getDatastore().delete(client).getN() > 0){
 				jsonMap.clear();
@@ -79,7 +81,7 @@ public class UserDAO {
 	//------------------------------------------------------------------------
 
 	public static Response getAdmin(String idAdmin) {
-		Admin admin = BikesDB.getDatastore().get(Admin.class, idAdmin);
+		Admin admin = BikesDB.getDatastore().get(Admin.class, new ObjectId(idAdmin));
 		if(admin != null) {
 			return ResponseBiker.buildResponse(admin, Status.OK);
 		}
@@ -126,7 +128,7 @@ public class UserDAO {
 	}
 	
 	public static Response getManager(String idManager) {
-		Manager manager = BikesDB.getDatastore().get(Manager.class, idManager);
+		Manager manager = BikesDB.getDatastore().get(Manager.class, new ObjectId(idManager));
 		if(manager != null) {
 			return ResponseBiker.buildResponse(manager, Status.OK);
 		}
@@ -147,7 +149,7 @@ public class UserDAO {
 	}
 	
 	public static Response removeManager(String idManager) {
-		Manager manager = BikesDB.getDatastore().get(Manager.class, idManager);
+		Manager manager = BikesDB.getDatastore().get(Manager.class, new ObjectId(idManager));
 		if(manager != null) {
 			if (BikesDB.getDatastore().delete(manager).getN() > 0){
 				jsonMap.clear();

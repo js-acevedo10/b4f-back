@@ -17,7 +17,7 @@ public class Bike {
 	public BikeType bikeType;
 	
 	@Reference
-	public List<RentPlace> history;
+	public List<String> history;
 	
 	public String brand;
     
@@ -45,7 +45,7 @@ public class Bike {
 	public Bike() {
 		//Es necesario tener al menos el constructor vacío en el modelo de cada objeto
 		this.reserveDate=null;
-        this.history = new ArrayList<RentPlace>();
+        this.history = new ArrayList<String>();
 	}
 
 	public Bike(String brand, BikeType bikeType, Boolean damaged, Boolean available) {
@@ -55,7 +55,7 @@ public class Bike {
 		this.damaged = damaged;
         this.available = available;
         this.reserveDate=null;
-        this.history = new ArrayList<RentPlace>();
+        this.history = new ArrayList<String>();
 	}
 
 	public ObjectId getId() {
@@ -107,15 +107,15 @@ public class Bike {
     	this.reserveDate = reserveDate;
     }
     
-    public List<RentPlace> getHistory() {
+    public List<String> getHistory() {
     	return history;
     }
     
-    public void setHistory(List<RentPlace> history) {
+    public void setHistory(List<String> history) {
     	this.history = history;
     }
     
-    public void addRentPlace(RentPlace rent){
+    public void addRentPlace(String rent){
     	this.history.add(rent);
     }
 }

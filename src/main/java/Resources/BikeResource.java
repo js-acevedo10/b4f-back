@@ -2,6 +2,7 @@ package Resources;
 
 import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
+import javax.management.relation.Role;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -55,12 +56,12 @@ public class BikeResource {
 	//-------------------------------------------------------------------
 	
 	@POST
-	@Path("/{bikeTypeName}")
-	@RolesAllowed(Roles.ADMIN)
+	@RolesAllowed({Roles.ADMIN, Roles.MANAGER})
+	@Path("/{idType}/{idVenue}")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response addBike(Bike bike, @PathParam("bikeTypeName") String bikeTypeName) {
-		return BikeDAO.addBike(bike, bikeTypeName);
+	public Response addBike(Bike bike, @PathParam("idType") String idType, @PathParam("idVenue") String idVenue) {
+		return BikeDAO.addBike(bike, idType, idVenue);
 	}
 
 	//-------------------------------------------------------------------

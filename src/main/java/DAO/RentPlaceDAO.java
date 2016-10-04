@@ -1,11 +1,13 @@
 package DAO;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.ws.rs.core.Response;
 
+import org.bson.Document;
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.query.Query;
@@ -18,6 +20,7 @@ import DTO.BikeType;
 import DTO.Client;
 import DTO.Penalty;
 import DTO.RentPlace;
+import DTO.Rental;
 import Utilities.BikesDB;
 import Utilities.ResponseBiker;
 
@@ -95,30 +98,51 @@ public class RentPlaceDAO {
 		}
 		
 	}
-	public static Response rentBike(String placeId, String bikeId)
+	public static Response rentBike(Document rentInfo)
 	{
+		System.out.println(rentInfo);
+		String placeName = rentInfo.getString("venueName");
+		String bikeId = rentInfo.getString("bikeId"); 
+		String userMail = rentInfo.getString("userMail");
+		
 		Datastore datastore = BikesDB.getDatastore();
-		RentPlace place = datastore.createQuery(RentPlace.class)
-				.field("id").equal(placeId)
-				.get(); 
+		RentPlace place = datastore.createQuery(RentPlace.class).field("name").equal(placeName).get();
 		if (place == null){
 			jsonMap.clear();
 			jsonMap.put("Error", "Rent Place not found");
 			String error = g.toJson(jsonMap);
 			return ResponseBiker.buildResponse(error, Response.Status.NOT_FOUND);
 		}
-		Bike bike = datastore.createQuery(Bike.class)
-				.field("id").equal(bikeId)
-				.get(); 
+		Bike bike = datastore.get(Bike.class, new ObjectId(bikeId));
 		if (bike == null){
 			jsonMap.clear();
-			jsonMap.put("Error", "Bike not found");
+			jsonMap.put("Error", "Bike not found in this Rent Place");
 			String error = g.toJson(jsonMap);
 			return ResponseBiker.buildResponse(error, Response.Status.NOT_FOUND);
 		}
+		Client client = datastore.createQuery(Client.class).field("email").equal(userMail).get();
+		if (client == null){
+			jsonMap.clear();
+			jsonMap.put("Error", "User not found.");
+			String error = g.toJson(jsonMap);
+			return ResponseBiker.buildResponse(error, Response.Status.NOT_FOUND);
+		}
+		if (client.isSuspended()){
+			jsonMap.clear();
+			jsonMap.put("Error", "Client is suspended.");
+			String error = g.toJson(jsonMap);
+			return ResponseBiker.buildResponse(error, Response.Status.CONFLICT);
+		}
+		
 		place.removeBike(bike);
 		datastore.save(place);
-
+		
+		Rental rent = new Rental(bike, client, new Date());
+		datastore.save(rent);
+		bike.addRental(rent.getId().toHexString());
+		bike.setAvailable(false);
+		datastore.save(bike);
+		
 		return ResponseBiker.buildResponse("Rent Place rented bike: "+bikeId, Response.Status.OK);
 	
 	}

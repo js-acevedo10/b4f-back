@@ -1,5 +1,6 @@
 package Resources;
 
+import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -12,6 +13,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.bson.Document;
 import org.bson.types.ObjectId;
 
 import DAO.BikeDAO;
@@ -45,12 +47,14 @@ public class RentPlaceResource {
 		//--------------------------------GET--------------------------------
 		//-------------------------------------------------------------------
 		
-		@GET
-		@RolesAllowed({Roles.MANAGER})
-		@Path("/{placeId}/rentBike/{bikeId}")
+		@POST
+//		@RolesAllowed({Roles.MANAGER})
+		@PermitAll
+		@Path("/r")
+		@Consumes(MediaType.APPLICATION_JSON)
 		@Produces(MediaType.APPLICATION_JSON)
-		public Response rentBike(@PathParam("placeId") String placeId,@PathParam("bikeId") String bikeId) {
-			return RentPlaceDAO.rentBike(placeId, bikeId);
+		public Response rentBike(Document rentInfo) {
+			return RentPlaceDAO.rentBike(rentInfo);
 		}
 		//-------------------------------------------------------------------
 		//--------------------------------GET--------------------------------

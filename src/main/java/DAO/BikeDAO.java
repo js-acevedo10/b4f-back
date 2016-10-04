@@ -1,15 +1,14 @@
 package DAO;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.ws.rs.core.Response;
 
-import org.bson.Document;
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.Datastore;
-import org.mongodb.morphia.Key;
 import org.mongodb.morphia.query.Query;
 
 import com.google.gson.Gson;
@@ -140,6 +139,23 @@ public class BikeDAO {
 			return ResponseBiker.buildResponse("Bike Deleted", Response.Status.OK);
 		}
 		
+	}
+
+	public static Response reserveBikeWithId(String bikeId) {
+		Datastore datastore = BikesDB.getDatastore();
+		final Query<Bike> queryBike = datastore.createQuery(Bike.class);
+		queryBike.field("id").equal(bikeId);
+		Bike resultBike = queryBike.get();
+		if (resultBike == null) {
+			jsonMap.clear();
+			jsonMap.put("Error", "Bike not found");
+			String error = g.toJson(jsonMap);
+			return ResponseBiker.buildResponse(error, Response.Status.NOT_FOUND);
+		} else {
+			resultBike.setReserveDate(new Date());
+			datastore.save(resultBike);
+			return ResponseBiker.buildResponse(resultBike, Response.Status.OK);
+		}
 	}
 	
 	

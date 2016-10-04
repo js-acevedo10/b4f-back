@@ -1,5 +1,6 @@
 package DTO;
 
+import java.util.Iterator;
 import java.util.List; 
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.annotations.Entity;
@@ -67,7 +68,12 @@ public class RentPlace {
 	}
 	public void removeBike(Bike addB)
 	{
-		bikes.remove(addB);
+		for (Bike bike : bikes) {
+			if (bike.getBrand().equals(addB.getBrand()) && bike.getId().equals(addB.getId())){
+				bikes.remove(bike);
+				return;
+			}
+		}
 	}
 
 }

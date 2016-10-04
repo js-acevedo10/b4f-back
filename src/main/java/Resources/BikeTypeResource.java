@@ -42,7 +42,7 @@ public class BikeTypeResource {
 	//-------------------------------------------------------------------
 	
 	@POST
-	@RolesAllowed(Roles.ADMIN)
+	@RolesAllowed({Roles.ADMIN, Roles.MANAGER})
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response addBikeType(BikeType bikeType) {

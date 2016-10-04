@@ -1,5 +1,6 @@
 package DAO;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -16,7 +17,9 @@ import com.google.gson.JsonParser;
 
 import DTO.Bike;
 import DTO.BikeType;
+import DTO.RentPlace;
 import Utilities.BikesDB;
+import Utilities.ObjectIdAdapter;
 import Utilities.ResponseBiker;
 
 public class BikeDAO {
@@ -83,34 +86,44 @@ public class BikeDAO {
 		}
 	}
 	
-	
-	public static Response addBike(Bike bike, String bikeTypeId) {
-		
+	public static Response getBikesWithRentId(String rentId) {
 		Datastore datastore = BikesDB.getDatastore();
-		System.out.println(bikeTypeId);
-		BikeType bikeType = datastore.createQuery(BikeType.class).
-				field("_id").equal(new ObjectId(bikeTypeId)).get();
-		System.out.println(bikeType);
-		if (bikeType  == null) {
+		final Query<Bike> queryBike = datastore.createQuery(Bike.class);
+		queryBike.field("history").hasThisElement(datastore.get(RentPlace.class, new ObjectId(rentId)));
+		List<Bike> bikes = queryBike.asList();
+		if (bikes == null || bikes.isEmpty()) {
 			jsonMap.clear();
-			jsonMap.put("Error", "BikeType not found");
+			jsonMap.put("Error", "Bikes not found");
 			String error = g.toJson(jsonMap);
 			return ResponseBiker.buildResponse(error, Response.Status.NOT_FOUND);
 		} else {
-			datastore.save(bike);
-			bike = datastore.createQuery(Bike.class).
-					field("_id").equal(bike.getId()).get();
+			return ResponseBiker.buildResponse(bikes, Response.Status.OK);
+		}
+	}
+	
+	public static Response addBike(Bike bike, String typeId, String venueId) {
+		Datastore datastore = BikesDB.getDatastore();
+		BikeType bikeType = datastore.get(BikeType.class, new ObjectId(typeId));
+		RentPlace venue = datastore.get(RentPlace.class, new ObjectId(venueId));
+		if (bikeType == null || venue == null) {
+			jsonMap.clear();
+			jsonMap.put("Error", "Arguments mismatch");
+			String error = g.toJson(jsonMap);
+			return ResponseBiker.buildResponse(error, Response.Status.NOT_FOUND);
+		} else {
 			bike.setBikeType(bikeType);
+			bike.addRentPlace(venueId);
 			datastore.save(bike);
+			venue.addBike(bike);
+			datastore.save(venue);
 			return getBikes();
 		}
+		
 	}
 	
 	public static Response editBike(Bike bike) {
 		Datastore datastore = BikesDB.getDatastore();
-		final Query<Bike> queryBike = datastore.createQuery(Bike.class);
-		queryBike.field("id").equal(bike.id);
-		Bike resultBike = queryBike.get();
+		Bike resultBike = datastore.get(Bike.class, bike.id);
 		if (resultBike == null) {
 			jsonMap.clear();
 			jsonMap.put("Error", "Bike not found");

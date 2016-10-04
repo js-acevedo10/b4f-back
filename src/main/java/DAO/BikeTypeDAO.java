@@ -131,8 +131,17 @@ public class BikeTypeDAO {
 			String error = g.toJson(jsonMap);
 			return ResponseBiker.buildResponse(error, Response.Status.NOT_FOUND);
 		} else {
-			datastore.delete(resultBikeType);
-			return ResponseBiker.buildResponse("BikeType Deleted", Response.Status.OK);
+			Query<Bike> query = BikesDB.getDatastore().find(Bike.class).field("bikeType").equal(BikesDB.getDatastore().get(BikeType.class,new ObjectId(bikeTypeId)));
+			if (query.asList().isEmpty()){
+				datastore.delete(resultBikeType);
+				return ResponseBiker.buildResponse("BikeType Deleted", Response.Status.OK);
+			}
+			else{
+				jsonMap.clear();
+				jsonMap.put("Error", "You need to delete any bike with this bike type before deleting it");
+				String error = g.toJson(jsonMap);
+				return ResponseBiker.buildResponse(error, Response.Status.CONFLICT);
+			}
 		}
 		
 	}

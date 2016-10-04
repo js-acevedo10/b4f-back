@@ -5,14 +5,14 @@ import org.mongodb.morphia.annotations.Entity;
 @Entity
 public class Client extends User {
 
-	public int points;
+	public double points;
 	public boolean suspended;
 	
 	public Client() {
 		
 	}
 
-	public Client(int points, boolean suspended, String name, String password, String email) {
+	public Client(double points, boolean suspended, String name, String password, String email) {
 		super();
 		this.points = points;
 		this.suspended = suspended;
@@ -21,7 +21,7 @@ public class Client extends User {
 		this.email = email;
 	}
 
-	public int getPoints() {
+	public double getPoints() {
 		return points;
 	}
 
@@ -29,7 +29,7 @@ public class Client extends User {
 		return suspended;
 	}
 
-	public void setPoints(int points) {
+	public void setPoints(double points) {
 		this.points = points;
 	}
 

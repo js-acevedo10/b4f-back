@@ -1,5 +1,6 @@
 package DAO;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -16,6 +17,7 @@ import com.google.gson.JsonParser;
 
 import DTO.Bike;
 import DTO.BikeType;
+import DTO.RentPlace;
 import Utilities.BikesDB;
 import Utilities.ResponseBiker;
 
@@ -83,6 +85,20 @@ public class BikeDAO {
 		}
 	}
 	
+	public static Response getBikesWithRentId(String rentId) {
+		Datastore datastore = BikesDB.getDatastore();
+		final Query<Bike> queryBike = datastore.createQuery(Bike.class);
+		queryBike.field("history").hasThisElement(datastore.get(RentPlace.class, new ObjectId(rentId)));
+		List<Bike> bikes = queryBike.asList();
+		if (bikes == null || bikes.isEmpty()) {
+			jsonMap.clear();
+			jsonMap.put("Error", "Bikes not found");
+			String error = g.toJson(jsonMap);
+			return ResponseBiker.buildResponse(error, Response.Status.NOT_FOUND);
+		} else {
+			return ResponseBiker.buildResponse(bikes, Response.Status.OK);
+		}
+	}
 	
 	public static Response addBike(Bike bike, String bikeTypeId) {
 		

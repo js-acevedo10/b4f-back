@@ -1,6 +1,8 @@
 package DTO;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.annotations.Id;
@@ -13,6 +15,9 @@ public class Bike {
 	
 	@Reference
 	public BikeType bikeType;
+	
+	@Reference
+	public List<RentPlace> history;
 	
 	public String brand;
     
@@ -39,6 +44,8 @@ public class Bike {
 
 	public Bike() {
 		//Es necesario tener al menos el constructor vacío en el modelo de cada objeto
+		this.reserveDate=null;
+        this.history = new ArrayList<RentPlace>();
 	}
 
 	public Bike(String brand, BikeType bikeType, Boolean damaged, Boolean available) {
@@ -48,6 +55,7 @@ public class Bike {
 		this.damaged = damaged;
         this.available = available;
         this.reserveDate=null;
+        this.history = new ArrayList<RentPlace>();
 	}
 
 	public ObjectId getId() {
@@ -97,5 +105,17 @@ public class Bike {
     
     public void setReserveDate(Date reserveDate) {
     	this.reserveDate = reserveDate;
+    }
+    
+    public List<RentPlace> getHistory() {
+    	return history;
+    }
+    
+    public void setHistory(List<RentPlace> history) {
+    	this.history = history;
+    }
+    
+    public void addRentPlace(RentPlace rent){
+    	this.history.add(rent);
     }
 }

@@ -1,5 +1,6 @@
 package Resources;
 
+import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -19,7 +20,7 @@ public class RentalResource {
 	//-------------------------------------------------------------------
 
 	@GET
-	@RolesAllowed({Roles.MANAGER})
+	@PermitAll
 	@Produces(MediaType.APPLICATION_JSON)
 	public static Response getRentals() {
 		return RentalDAO.getRentals();

@@ -15,6 +15,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.bson.types.ObjectId;
+import org.mongodb.morphia.annotations.AlsoLoad;
 
 import DAO.BikeDAO;
 import DTO.Bike;
@@ -45,7 +46,7 @@ public class BikeResource {
 	
 	@GET
 	@Path("/reserve/{bikeId}")
-	@RolesAllowed(Roles.ADMIN)
+	@PermitAll
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response reserveBike(@PathParam("bikeId") String bikeId) {
 		return BikeDAO.reserveBikeWithId(bikeId);

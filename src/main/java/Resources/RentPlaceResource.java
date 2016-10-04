@@ -46,6 +46,7 @@ public class RentPlaceResource {
 		//-------------------------------------------------------------------
 		
 		@GET
+		@RolesAllowed({Roles.MANAGER})
 		@Path("/{placeId}/rentBike/{bikeId}")
 		@Produces(MediaType.APPLICATION_JSON)
 		public Response rentBike(@PathParam("placeId") String placeId,@PathParam("bikeId") String bikeId) {

@@ -46,6 +46,7 @@ public class Bike {
 	public Bike() {
 		//Es necesario tener al menos el constructor vacío en el modelo de cada objeto
 		this.reserveDate=null;
+		this.reserve =false;
         this.history = new ArrayList<String>();
         this.rentals = new ArrayList<String>();
 	}
@@ -59,6 +60,7 @@ public class Bike {
         this.reserveDate=null;
         this.history = new ArrayList<String>();
         this.rentals = new ArrayList<String>();
+        this.reserve = false;
 	}
 
 	public ObjectId getId() {

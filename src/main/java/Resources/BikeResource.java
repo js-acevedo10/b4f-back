@@ -43,7 +43,7 @@ public class BikeResource {
 	}
 	
 	@GET
-	@Path("/{rentalId}")
+	@Path("/r/{rentalId}")
 	@RolesAllowed(Roles.MANAGER)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getBikesWithRentId(@PathParam("rentalId") String rentalId) {

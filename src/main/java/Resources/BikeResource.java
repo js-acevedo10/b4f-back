@@ -41,6 +41,15 @@ public class BikeResource {
 	public Response getBikeWithId(@PathParam("bikeId") String bikeId) {
 		return BikeDAO.getBikeWithId(bikeId);
 	}
+	
+	@GET
+	@Path("/reserve/{bikeId}")
+	@RolesAllowed(Roles.ADMIN)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response reserveBike(@PathParam("bikeId") String bikeId) {
+		return BikeDAO.reserveBikeWithId(bikeId);
+	}
+	
 
 	//-------------------------------------------------------------------
 	//--------------------------------POST-------------------------------

@@ -23,7 +23,7 @@ public class Penalty extends BikesObject {
 	private Boolean pending;
 
 	public Penalty(){
-		
+		super();
 	}
 
 	public Penalty(Double fee, Date suspensionStart, Date suspensionEnd, Boolean trainingRequiered) {

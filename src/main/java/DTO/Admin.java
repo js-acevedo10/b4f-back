@@ -6,7 +6,7 @@ import org.mongodb.morphia.annotations.Entity;
 public class Admin extends User {
 	
 	public Admin(){
-		
+		super();
 	}
 	
 	public Admin(String name, String password, String email) {

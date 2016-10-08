@@ -9,7 +9,7 @@ public class Client extends User {
 	public boolean suspended;
 	
 	public Client() {
-		
+		super();
 	}
 
 	public Client(double points, boolean suspended, String name, String password, String email) {

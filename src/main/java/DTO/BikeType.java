@@ -18,6 +18,7 @@ public class BikeType extends BikesObject {
 	
 	public BikeType() {
 		//Es necesario tener al menos el constructor vacío en el modelo de cada objeto
+		super();
 	}
 
 	public BikeType(String name, int capacity, String imageURL) {

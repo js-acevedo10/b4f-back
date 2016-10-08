@@ -9,6 +9,7 @@ public class BikesObject {
 	private Date modifiedAt;
 	
 	public BikesObject() {
+		deleted = false;
 	}
 
 	public Boolean getDeleted() {

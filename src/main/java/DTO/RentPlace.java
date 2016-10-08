@@ -20,7 +20,7 @@ public class RentPlace extends BikesObject {
 	@Reference 
     private List<Bike> bikes;   
 	public RentPlace(){
-		
+		super();
 	}
 
 	public ObjectId getId() {

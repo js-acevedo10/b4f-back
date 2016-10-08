@@ -31,6 +31,7 @@ public class Rental extends BikesObject {
 	public RentPlace drop;
 
 	public Rental() {
+		super();
 		allowedUsers = new ArrayList<String>();
 	}
 

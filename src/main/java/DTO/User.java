@@ -11,6 +11,7 @@ public class User extends BikesObject {
 	public String name, password, email;
 	
 	public User() {
+		super();
 		//Es necesario tener al menos el constructor vacío en el modelo de cada objeto
 	}
 

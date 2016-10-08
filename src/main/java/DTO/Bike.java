@@ -45,6 +45,7 @@ public class Bike extends BikesObject {
 
 	public Bike() {
 		//Es necesario tener al menos el constructor vacío en el modelo de cada objeto
+		super();
 		this.reserveDate=null;
 		this.reserve =false;
         this.history = new ArrayList<String>();

@@ -18,12 +18,6 @@ import Utilities.ResponseBiker;
 
 public class PenaltyDAO {
 
-	public static void main(String[] args) {
-//		penalize("juansantiago.acevedocorrea@gmail.com", new Penalty(3500.0, new Date(), new Date(), false));
-//		System.out.println(getPenalties("juansantiago.acevedocorrea@gmail.com").getEntity().toString());
-//		System.out.println(payPenalty(new ObjectId("57ce1c198ce2cc049aede7ea")).getEntity().toString());
-	}
-
 	public static Map<String, String> jsonMap = new HashMap<String, String>();
 	public static Gson g = new Gson();
 
@@ -31,7 +25,7 @@ public class PenaltyDAO {
 		Datastore datastore = BikesDB.getDatastore();
 
 		Client client = datastore.createQuery(Client.class)
-				.field("email").equal(username)
+				.field("email").equal(username).field("deleted").equal(false)
 				.get(); 
 		if (client == null){
 			jsonMap.clear();
@@ -41,7 +35,7 @@ public class PenaltyDAO {
 		}
 
 		List<Penalty> penalties = datastore.createQuery(Penalty.class)
-				.filter("client", client)
+				.filter("client", client).field("deleted").equal(false)
 				.asList();
 
 		if(penalties == null || penalties.isEmpty()) {

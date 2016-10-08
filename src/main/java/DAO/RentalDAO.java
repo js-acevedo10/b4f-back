@@ -27,7 +27,7 @@ public class RentalDAO {
 	public static Response getRentals() {
 		Datastore datastore = BikesDB.getDatastore();
 
-		List<Rental> rentals = datastore.createQuery(Rental.class).asList();
+		List<Rental> rentals = datastore.createQuery(Rental.class).field("deleted").equal(false).asList();
 
 		if(rentals == null || rentals.isEmpty()) {
 			jsonMap.clear();
@@ -142,6 +142,8 @@ public class RentalDAO {
 				rental.getBike().setAvailable(true);
 				rental.getBike().setReserve(false);
 				rental.getBike().modify();
+				rental.setDrop(venue);
+				rental.modify();
 				datastore.save(rental.getBike());
 				
 				venue.modify();

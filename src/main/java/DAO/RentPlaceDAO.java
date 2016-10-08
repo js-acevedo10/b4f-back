@@ -32,7 +32,7 @@ public class RentPlaceDAO {
 	public static Response getRentPlaces() {
 		Datastore datastore = BikesDB.getDatastore();
 
-		List<RentPlace> places = datastore.createQuery(RentPlace.class)
+		List<RentPlace> places = datastore.createQuery(RentPlace.class).field("deleted").equal(false)
 					.asList();
 
 		if(places == null || places.isEmpty()) {
@@ -46,7 +46,7 @@ public class RentPlaceDAO {
 	}
 	public static Response getRentPlaceWithId(String placeId) {
 		Datastore datastore = BikesDB.getDatastore();
-		final Query<RentPlace> queryPlace = datastore.createQuery(RentPlace.class);
+		final Query<RentPlace> queryPlace = datastore.createQuery(RentPlace.class).field("deleted").equal(false);
 		queryPlace.field("id").equal(new ObjectId(placeId));
 		RentPlace place = queryPlace.get();
 		if (place  == null) {
@@ -93,7 +93,8 @@ public class RentPlaceDAO {
 			String error = g.toJson(jsonMap);
 			return ResponseBiker.buildResponse(error, Response.Status.NOT_FOUND);
 		} else {
-			datastore.delete(resultPLace);
+			resultPLace.delete();
+			datastore.save(resultPLace);
 			return ResponseBiker.buildResponse("Rent Place Deleted", Response.Status.OK);
 		}
 		
@@ -137,7 +138,8 @@ public class RentPlaceDAO {
 		place.removeBike(bike);
 		datastore.save(place);
 		
-		Rental rent = new Rental(bike, client, new Date());
+		Rental rent = new Rental(bike, client, new Date(), place);
+		rent.create();
 		datastore.save(rent);
 		bike.addRental(rent.getId().toHexString());
 		bike.setAvailable(false);
@@ -146,32 +148,32 @@ public class RentPlaceDAO {
 		return ResponseBiker.buildResponse("Rent Place rented bike: "+bikeId, Response.Status.OK);
 	
 	}
-	public static Response returnBike(String placeId, String bikeId)
-	{
-		Datastore datastore = BikesDB.getDatastore();
-		RentPlace place = datastore.createQuery(RentPlace.class)
-				.field("id").equal(placeId)
-				.get(); 
-		if (place == null){
-			jsonMap.clear();
-			jsonMap.put("Error", "Rent Place not found");
-			String error = g.toJson(jsonMap);
-			return ResponseBiker.buildResponse(error, Response.Status.NOT_FOUND);
-		}
-		Bike bike = datastore.createQuery(Bike.class)
-				.field("id").equal(bikeId)
-				.get(); 
-		if (bike == null){
-			jsonMap.clear();
-			jsonMap.put("Error", "Bike not found");
-			String error = g.toJson(jsonMap);
-			return ResponseBiker.buildResponse(error, Response.Status.NOT_FOUND);
-		}
-		place.addBike(bike);
-		datastore.save(place);
-
-		return ResponseBiker.buildResponse("Rent Place gets bike: "+bikeId, Response.Status.OK);
-	}
+//	public static Response returnBike(String placeId, String bikeId)
+//	{
+//		Datastore datastore = BikesDB.getDatastore();
+//		RentPlace place = datastore.createQuery(RentPlace.class)
+//				.field("id").equal(placeId)
+//				.get(); 
+//		if (place == null){
+//			jsonMap.clear();
+//			jsonMap.put("Error", "Rent Place not found");
+//			String error = g.toJson(jsonMap);
+//			return ResponseBiker.buildResponse(error, Response.Status.NOT_FOUND);
+//		}
+//		Bike bike = datastore.createQuery(Bike.class)
+//				.field("id").equal(bikeId)
+//				.get(); 
+//		if (bike == null){
+//			jsonMap.clear();
+//			jsonMap.put("Error", "Bike not found");
+//			String error = g.toJson(jsonMap);
+//			return ResponseBiker.buildResponse(error, Response.Status.NOT_FOUND);
+//		}
+//		place.addBike(bike);
+//		datastore.save(place);
+//
+//		return ResponseBiker.buildResponse("Rent Place gets bike: "+bikeId, Response.Status.OK);
+//	}
 	
 	
 }

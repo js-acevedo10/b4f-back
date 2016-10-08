@@ -88,7 +88,14 @@ public class AuthDAO {
 			resp.put("token", token);
 			resp.put("points", client.getPoints());
 			resp.put("suspended", client.isSuspended());
-			return ResponseBiker.buildResponse(resp, Response.Status.OK);
+			if(client.isSuspended()){
+				jsonMap.clear();
+				jsonMap.put("Error", "User is suspended.");
+				String error = g.toJson(jsonMap);
+				return ResponseBiker.buildResponse(error, Response.Status.CONFLICT);
+			}else{
+				return ResponseBiker.buildResponse(resp, Response.Status.OK);
+			}
 		}
 	}
 	

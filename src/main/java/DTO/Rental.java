@@ -23,15 +23,22 @@ public class Rental extends BikesObject {
 	public List<String> allowedUsers;
 	
 	public boolean delivered;
+	
+	@Reference
+	public RentPlace origin;
+	
+	@Reference
+	public RentPlace drop;
 
 	public Rental() {
 		allowedUsers = new ArrayList<String>();
 	}
 
-	public Rental(Bike bike, Client client, Date rentDate) {
+	public Rental(Bike bike, Client client, Date rentDate, RentPlace origin) {
 		this.bike = bike;
 		this.client = client;
 		this.rentDate = rentDate;
+		this.origin = origin;
 	}
 
 	public ObjectId getId() {
@@ -84,6 +91,22 @@ public class Rental extends BikesObject {
 
 	public void setDelivered(boolean delivered) {
 		this.delivered = delivered;
+	}
+
+	public RentPlace getOrigin() {
+		return origin;
+	}
+
+	public void setOrigin(RentPlace origin) {
+		this.origin = origin;
+	}
+
+	public RentPlace getDrop() {
+		return drop;
+	}
+
+	public void setDrop(RentPlace drop) {
+		this.drop = drop;
 	}
 	
 	

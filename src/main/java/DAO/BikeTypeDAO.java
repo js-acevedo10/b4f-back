@@ -58,7 +58,7 @@ public class BikeTypeDAO {
 	
 	public static Response getBikeTypes() {
 		Datastore datastore = BikesDB.getDatastore();
-		List<BikeType> types = datastore.createQuery(BikeType.class).asList();
+		List<BikeType> types = datastore.createQuery(BikeType.class).field("deleted").equal(false).asList();
 		if (types  == null) {
 			jsonMap.clear();
 			jsonMap.put("Error", "Error fetching types.");
@@ -71,7 +71,7 @@ public class BikeTypeDAO {
 	
 	public static Response getBikeTypeWithName(String bikeTypeName) {
 		Datastore datastore = BikesDB.getDatastore();
-		final Query<BikeType> queryBikeType = datastore.createQuery(BikeType.class);
+		final Query<BikeType> queryBikeType = datastore.createQuery(BikeType.class).field("deleted").equal(false);
 		queryBikeType.field("name").equal(bikeTypeName);
 		BikeType bikeType = queryBikeType.get();
 		if (bikeType  == null) {
@@ -133,7 +133,8 @@ public class BikeTypeDAO {
 		} else {
 			Query<Bike> query = BikesDB.getDatastore().find(Bike.class).field("bikeType").equal(BikesDB.getDatastore().get(BikeType.class,new ObjectId(bikeTypeId)));
 			if (query.asList().isEmpty()){
-				datastore.delete(resultBikeType);
+				resultBikeType.delete();
+				datastore.save(resultBikeType);
 				return ResponseBiker.buildResponse("BikeType Deleted", Response.Status.OK);
 			}
 			else{

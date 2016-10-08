@@ -28,7 +28,7 @@ public class BikeDAO {
 	
 	public static Response getBikes() {
 		Datastore datastore = BikesDB.getDatastore();
-		List<Bike> bikes = datastore.createQuery(Bike.class).asList();
+		List<Bike> bikes = datastore.createQuery(Bike.class).field("deleted").equal(false).asList();
 		if (bikes  == null) {
 			jsonMap.clear();
 			jsonMap.put("Error", "Error fetching bikes");
@@ -41,7 +41,7 @@ public class BikeDAO {
 	
 	public static Response getBikeWithId(String bikeId) {
 		Datastore datastore = BikesDB.getDatastore();
-		final Query<Bike> queryBike = datastore.createQuery(Bike.class);
+		final Query<Bike> queryBike = datastore.createQuery(Bike.class).field("deleted").equal(false);
 		queryBike.field("id").equal(new ObjectId(bikeId));
 		Bike bike = queryBike.get();
 		if (bike  == null) {
@@ -56,7 +56,7 @@ public class BikeDAO {
 	
 	public static Response getBikesWithRentId(String rentId) {
 		Datastore datastore = BikesDB.getDatastore();
-		final Query<Bike> queryBike = datastore.createQuery(Bike.class);
+		final Query<Bike> queryBike = datastore.createQuery(Bike.class).field("deleted").equal(false);
 		queryBike.field("history").hasThisElement(datastore.get(RentPlace.class, new ObjectId(rentId)));
 		List<Bike> bikes = queryBike.asList();
 		if (bikes == null || bikes.isEmpty()) {

@@ -18,16 +18,16 @@ import Utilities.BikesDB;
 import Utilities.ResponseBiker;
 
 public class UserDAO {
-	
+
 	public static Map<String, String> jsonMap = new HashMap<String, String>();
 	public static Gson g = new Gson();
-	
+
 	//------------------------------------------------------------------------
 	//---------------------------------CLIENTE--------------------------------
 	//------------------------------------------------------------------------
-	
+
 	public static Response getClients() {
-		List<Client> clients = BikesDB.getDatastore().createQuery(Client.class).asList();
+		List<Client> clients = BikesDB.getDatastore().createQuery(Client.class).field("deleted").equal(false).asList();
 		if(clients != null && !clients.isEmpty()) {
 			return ResponseBiker.buildResponse(clients, Status.OK);
 		}
@@ -36,7 +36,7 @@ public class UserDAO {
 		String error = g.toJson(jsonMap);
 		return ResponseBiker.buildResponse(error, Status.NOT_FOUND);
 	}
-	
+
 	public static Response getClient(String idClient) {
 		Client client = BikesDB.getDatastore().get(Client.class, new ObjectId(idClient));
 		if(client != null) {
@@ -47,28 +47,28 @@ public class UserDAO {
 		String error = g.toJson(jsonMap);
 		return ResponseBiker.buildResponse(error, Status.NOT_FOUND);
 	}
-	
+
 	public static Response addClient(Client client) {
 		client.points = 0;
 		client.suspended = false;
 		BikesDB.getDatastore().save(client);
 		return AuthDAO.login(client.email, client.password);
 	}
-	
+
 	public static Response updateClient(Client client) {
 		BikesDB.getDatastore().save(client);
 		return ResponseBiker.buildResponse(client, Status.OK);
 	}
-	
+
 	public static Response removeClient(String idClient) {
 		Client client = BikesDB.getDatastore().get(Client.class, new ObjectId(idClient));
 		if(client != null) {
-			if (BikesDB.getDatastore().delete(client).getN() > 0){
-				jsonMap.clear();
-				jsonMap.put("Succes", "User removed.");
-				String callback = g.toJson(jsonMap);
-				return ResponseBiker.buildResponse(callback, Status.OK);
-			}
+			client.delete();
+			BikesDB.getDatastore().save(client);
+			jsonMap.clear();
+			jsonMap.put("Succes", "User removed.");
+			String callback = g.toJson(jsonMap);
+			return ResponseBiker.buildResponse(callback, Status.OK);
 		}
 		jsonMap.clear();
 		jsonMap.put("Error", "User not found.");
@@ -90,9 +90,9 @@ public class UserDAO {
 		String error = g.toJson(jsonMap);
 		return ResponseBiker.buildResponse(error, Status.NOT_FOUND);
 	}
-	
+
 	public static Response getAdmin() {
-		List<Admin> managers = BikesDB.getDatastore().createQuery(Admin.class).asList();
+		List<Admin> managers = BikesDB.getDatastore().createQuery(Admin.class).field("deleted").equal(false).asList();
 		if(managers != null && !managers.isEmpty()) {
 			return ResponseBiker.buildResponse(managers, Status.OK);
 		}
@@ -101,23 +101,24 @@ public class UserDAO {
 		String error = g.toJson(jsonMap);
 		return ResponseBiker.buildResponse(error, Status.NOT_FOUND);
 	}
-	
+
 	public static Response addAdmin(Admin admin) {
 		BikesDB.getDatastore().save(admin);
 		return AuthDAO.login(admin.email, admin.password);
 	}
-	
+
 	public static Response updateAdmin(Admin admin) {
+		admin.modify();
 		BikesDB.getDatastore().save(admin);
 		return ResponseBiker.buildResponse(admin, Status.OK);
 	}
-	
+
 	//------------------------------------------------------------------------
 	//---------------------------------MANAGER--------------------------------
 	//------------------------------------------------------------------------
-	
+
 	public static Response getManager() {
-		List<Manager> managers = BikesDB.getDatastore().createQuery(Manager.class).asList();
+		List<Manager> managers = BikesDB.getDatastore().createQuery(Manager.class).field("deleted").equal(false).asList();
 		if(managers != null && !managers.isEmpty()) {
 			return ResponseBiker.buildResponse(managers, Status.OK);
 		}
@@ -126,7 +127,7 @@ public class UserDAO {
 		String error = g.toJson(jsonMap);
 		return ResponseBiker.buildResponse(error, Status.NOT_FOUND);
 	}
-	
+
 	public static Response getManager(String idManager) {
 		Manager manager = BikesDB.getDatastore().get(Manager.class, new ObjectId(idManager));
 		if(manager != null) {
@@ -137,26 +138,28 @@ public class UserDAO {
 		String error = g.toJson(jsonMap);
 		return ResponseBiker.buildResponse(error, Status.NOT_FOUND);
 	}
-	
+
 	public static Response addManager(Manager manager) {
 		BikesDB.getDatastore().save(manager);
 		return AuthDAO.login(manager.email, manager.password);
 	}
-	
+
 	public static Response updateManager(Manager manager) {
+		manager.modify();
 		BikesDB.getDatastore().save(manager);
 		return ResponseBiker.buildResponse(manager, Status.OK);
 	}
-	
+
 	public static Response removeManager(String idManager) {
 		Manager manager = BikesDB.getDatastore().get(Manager.class, new ObjectId(idManager));
 		if(manager != null) {
-			if (BikesDB.getDatastore().delete(manager).getN() > 0){
-				jsonMap.clear();
-				jsonMap.put("Succes", "User removed.");
-				String callback = g.toJson(jsonMap);
-				return ResponseBiker.buildResponse(callback, Status.OK);
-			}
+			manager.delete();
+			BikesDB.getDatastore().save(manager);
+			jsonMap.clear();
+			jsonMap.put("Succes", "User removed.");
+			String callback = g.toJson(jsonMap);
+			return ResponseBiker.buildResponse(callback, Status.OK);
+
 		}
 		jsonMap.clear();
 		jsonMap.put("Error", "User not found.");

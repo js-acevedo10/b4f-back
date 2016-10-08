@@ -60,12 +60,12 @@ public class RentPlaceResource {
 		//--------------------------------GET--------------------------------
 		//-------------------------------------------------------------------
 		
-		@GET
-		@Path("/{placeId}/returnBike/{bikeId}")
-		@Produces(MediaType.APPLICATION_JSON)
-		public Response returnBike(@PathParam("placeId") String placeId,@PathParam("bikeId") String bikeId) {
-			return RentPlaceDAO.returnBike(placeId, bikeId);
-		}
+//		@GET
+//		@Path("/{placeId}/returnBike/{bikeId}")
+//		@Produces(MediaType.APPLICATION_JSON)
+//		public Response returnBike(@PathParam("placeId") String placeId,@PathParam("bikeId") String bikeId) {
+//			return RentPlaceDAO.returnBike(placeId, bikeId);
+//		}
 
 		//-------------------------------------------------------------------
 		//--------------------------------POST-------------------------------

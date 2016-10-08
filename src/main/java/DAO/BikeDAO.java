@@ -1,6 +1,5 @@
 package DAO;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -19,40 +18,9 @@ import DTO.Bike;
 import DTO.BikeType;
 import DTO.RentPlace;
 import Utilities.BikesDB;
-import Utilities.ObjectIdAdapter;
 import Utilities.ResponseBiker;
 
 public class BikeDAO {
-	
-	public static void main(String[] args) {
-
-		//  TEST getBike 
-//      Meter un ID de la tabla
-//      System.out.println(getBikeWithId("57ce235b8e2eaa25153992a4").getEntity().toString());
-		
-		
-		// TEST addBike
-		
-//		Bike p = new Bike("TRX", null, false, true);
-//		System.out.println(addBike(p, "Standard").getEntity().toString());
-//		
-		
-		// TEST editBike
-		// Poner ID de una bicicleta de la tabla
-//		Datastore datastore = BikesDB.getDatastore();
-//		final Query<Bike> queryBike = datastore.createQuery(Bike.class);
-//		queryBike.field("id").equal(new ObjectId("57ce22b48e2eaa2462313b2f"));
-//		Bike bike = queryBike.get();
-//		bike.setBrand("NEW");
-//		
-//		System.out.println(editBike(bike).getEntity().toString());
-		
-		// TEST DeleteBike
-		//Cambiar ID por uno de la tabla...
-//		System.out.println(deleteBike("57ce23078e2eaa24d922c772").getEntity().toString());
-//		
-//		
-	}
 	
 	public static JsonParser jsonParser = new JsonParser();
 	public static Map<String, String> jsonMap = new HashMap<String, String>();

@@ -2,7 +2,6 @@ package Resources;
 
 import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
-import javax.management.relation.Role;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -15,11 +14,9 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.bson.types.ObjectId;
-import org.mongodb.morphia.annotations.AlsoLoad;
 
 import DAO.BikeDAO;
 import DTO.Bike;
-import DTO.RentPlace;
 import Security.Roles;
 
 @Path("/bikes")
@@ -92,7 +89,7 @@ public class BikeResource {
 	
 	@DELETE
 	@Path("/{bikeId}")
-	@RolesAllowed(Roles.ADMIN)
+	@RolesAllowed({Roles.ADMIN, Roles.MANAGER})
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response deleteBike(@PathParam("bikeId") String bikeId) {

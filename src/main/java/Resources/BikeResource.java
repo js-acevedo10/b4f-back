@@ -42,7 +42,7 @@ public class BikeResource {
 		return BikeDAO.getBikeWithId(bikeId);
 	}
 	
-	@GET
+	@PUT
 	@Path("/reserve")
 	@PermitAll
 	@Consumes(MediaType.APPLICATION_JSON)

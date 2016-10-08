@@ -123,9 +123,9 @@ public class BikeDAO {
 		
 	}
 
-	public static Response reserveBikeWithId(String bikeId) {
+	public static Response reserveBikeWithId(ObjectId bikeId) {
 		Datastore datastore = BikesDB.getDatastore();
-		Bike resultBike = datastore.get(Bike.class, new ObjectId(bikeId));
+		Bike resultBike = datastore.get(Bike.class, bikeId);
 		if (resultBike == null) {
 			jsonMap.clear();
 			jsonMap.put("Error", "Bike not found");

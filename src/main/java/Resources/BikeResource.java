@@ -45,7 +45,7 @@ public class BikeResource {
 	@Path("/reserve/{bikeId}")
 	@PermitAll
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response reserveBike(@PathParam("bikeId") String bikeId) {
+	public Response reserveBike(@PathParam("bikeId") ObjectId bikeId) {
 		return BikeDAO.reserveBikeWithId(bikeId);
 	}
 	

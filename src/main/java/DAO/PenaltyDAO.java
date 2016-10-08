@@ -25,7 +25,7 @@ public class PenaltyDAO {
 		Datastore datastore = BikesDB.getDatastore();
 
 		Client client = datastore.createQuery(Client.class)
-				.field("email").equal(username).field("deleted").equal(false)
+				.field("email").equal(username)
 				.get(); 
 		if (client == null){
 			jsonMap.clear();

@@ -27,7 +27,7 @@ public class UserDAO {
 	//------------------------------------------------------------------------
 
 	public static Response getClients() {
-		List<Client> clients = BikesDB.getDatastore().createQuery(Client.class).field("deleted").equal(false).asList();
+		List<Client> clients = BikesDB.getDatastore().createQuery(Client.class).asList();
 		if(clients != null && !clients.isEmpty()) {
 			return ResponseBiker.buildResponse(clients, Status.OK);
 		}
@@ -92,7 +92,7 @@ public class UserDAO {
 	}
 
 	public static Response getAdmin() {
-		List<Admin> managers = BikesDB.getDatastore().createQuery(Admin.class).field("deleted").equal(false).asList();
+		List<Admin> managers = BikesDB.getDatastore().createQuery(Admin.class).asList();
 		if(managers != null && !managers.isEmpty()) {
 			return ResponseBiker.buildResponse(managers, Status.OK);
 		}
@@ -118,7 +118,7 @@ public class UserDAO {
 	//------------------------------------------------------------------------
 
 	public static Response getManager() {
-		List<Manager> managers = BikesDB.getDatastore().createQuery(Manager.class).field("deleted").equal(false).asList();
+		List<Manager> managers = BikesDB.getDatastore().createQuery(Manager.class).asList();
 		if(managers != null && !managers.isEmpty()) {
 			return ResponseBiker.buildResponse(managers, Status.OK);
 		}

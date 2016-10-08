@@ -32,7 +32,7 @@ public class RentPlaceDAO {
 	public static Response getRentPlaces() {
 		Datastore datastore = BikesDB.getDatastore();
 
-		List<RentPlace> places = datastore.createQuery(RentPlace.class).field("deleted").equal(false)
+		List<RentPlace> places = datastore.createQuery(RentPlace.class)
 					.asList();
 
 		if(places == null || places.isEmpty()) {
@@ -46,7 +46,7 @@ public class RentPlaceDAO {
 	}
 	public static Response getRentPlaceWithId(String placeId) {
 		Datastore datastore = BikesDB.getDatastore();
-		final Query<RentPlace> queryPlace = datastore.createQuery(RentPlace.class).field("deleted").equal(false);
+		final Query<RentPlace> queryPlace = datastore.createQuery(RentPlace.class);
 		queryPlace.field("id").equal(new ObjectId(placeId));
 		RentPlace place = queryPlace.get();
 		if (place  == null) {

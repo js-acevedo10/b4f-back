@@ -4,11 +4,9 @@ import java.util.List;
 import java.util.Map;
 
 import org.mongodb.morphia.Datastore;
-import org.mongodb.morphia.DatastoreImpl;
 import org.mongodb.morphia.Key;
 import org.mongodb.morphia.MapreduceResults;
 import org.mongodb.morphia.MapreduceType;
-import org.mongodb.morphia.Morphia;
 import org.mongodb.morphia.aggregation.AggregationPipeline;
 import org.mongodb.morphia.query.Query;
 import org.mongodb.morphia.query.QueryFactory;
@@ -260,166 +258,143 @@ public class BikesDatastore implements Datastore{
 
 	@Override
 	public void setDefaultWriteConcern(WriteConcern wc) {
-		// TODO Auto-generated method stub
-		
+		ds.setDefaultWriteConcern(wc);
 	}
 
 
 	@Override
 	public <T> Key<T> getKey(T entity) {
-		// TODO Auto-generated method stub
-		return null;
+		return ds.getKey(entity);
 	}
 
 
 	@Override
 	public MongoClient getMongo() {
-		// TODO Auto-generated method stub
-		return null;
+		return ds.getMongo();
 	}
 
 
 	@Override
 	public QueryFactory getQueryFactory() {
-		// TODO Auto-generated method stub
-		return null;
+		return ds.getQueryFactory();
 	}
 
 
 	@Override
 	public void setQueryFactory(QueryFactory queryFactory) {
-		// TODO Auto-generated method stub
-		
+		ds.setQueryFactory(queryFactory);
 	}
 
 
 	@Override
 	public <T> MapreduceResults<T> mapReduce(MapreduceType type, Query q, String map, String reduce, String finalize,
 			Map<String, Object> scopeFields, Class<T> outputType) {
-		// TODO Auto-generated method stub
-		return null;
+		return ds.mapReduce(type, q, map, reduce, finalize, scopeFields, outputType);
 	}
 
 
 	@Override
 	public <T> MapreduceResults<T> mapReduce(MapreduceType type, Query q, Class<T> outputType,
 			MapReduceCommand baseCommand) {
-		// TODO Auto-generated method stub
-		return null;
+		return ds.mapReduce(type, q, outputType, baseCommand);
 	}
 
 
 	@Override
 	public <T> Key<T> merge(T entity) {
-		// TODO Auto-generated method stub
-		return null;
+		return ds.merge(entity);
 	}
 
 
 	@Override
 	public <T> Key<T> merge(T entity, WriteConcern wc) {
-		// TODO Auto-generated method stub
-		return null;
+		return ds.merge(entity, wc);
 	}
 
 
 	@Override
 	public <T> Query<T> queryByExample(T example) {
-		// TODO Auto-generated method stub
-		return null;
+		return ds.queryByExample(example);
 	}
 
 
 	@Override
 	public <T> Iterable<Key<T>> save(Iterable<T> entities) {
-		// TODO Auto-generated method stub
-		return null;
+		return ds.save(entities);
 	}
 
 
 	@Override
 	public <T> Iterable<Key<T>> save(Iterable<T> entities, WriteConcern wc) {
-		// TODO Auto-generated method stub
-		return null;
+		return ds.save(entities, wc);
 	}
 
 
 	@Override
 	public <T> Iterable<Key<T>> save(T... entities) {
-		// TODO Auto-generated method stub
-		return null;
+		return ds.save(entities);
 	}
 
 
 	@Override
 	public <T> Key<T> save(T entity, WriteConcern wc) {
-		// TODO Auto-generated method stub
-		return null;
+		return ds.save(entity, wc);
 	}
 
 
 	@Override
 	public <T> UpdateResults update(T entity, UpdateOperations<T> operations) {
-		// TODO Auto-generated method stub
-		return null;
+		return ds.update(entity, operations);
 	}
 
 
 	@Override
 	public <T> UpdateResults update(Key<T> key, UpdateOperations<T> operations) {
-		// TODO Auto-generated method stub
-		return null;
+		return ds.update(key, operations);
 	}
 
 
 	@Override
 	public <T> UpdateResults update(Query<T> query, UpdateOperations<T> operations) {
-		// TODO Auto-generated method stub
-		return null;
+		return ds.update(query, operations);
 	}
 
 
 	@Override
 	public <T> UpdateResults update(Query<T> query, UpdateOperations<T> operations, boolean createIfMissing) {
-		// TODO Auto-generated method stub
-		return null;
+		return ds.update(query, operations, createIfMissing);
 	}
 
 
 	@Override
 	public <T> UpdateResults update(Query<T> query, UpdateOperations<T> operations, boolean createIfMissing,
 			WriteConcern wc) {
-		// TODO Auto-generated method stub
-		return null;
+		return ds.update(query, operations, createIfMissing, wc);
 	}
 
 
 	@Override
 	public <T> UpdateResults updateFirst(Query<T> query, UpdateOperations<T> operations) {
-		// TODO Auto-generated method stub
-		return null;
+		return ds.updateFirst(query, operations);
 	}
 
 
 	@Override
 	public <T> UpdateResults updateFirst(Query<T> query, UpdateOperations<T> operations, boolean createIfMissing) {
-		// TODO Auto-generated method stub
-		return null;
+		return ds.updateFirst(query, operations, createIfMissing);
 	}
 
 
 	@Override
 	public <T> UpdateResults updateFirst(Query<T> query, UpdateOperations<T> operations, boolean createIfMissing,
 			WriteConcern wc) {
-		// TODO Auto-generated method stub
-		return null;
+		return ds.updateFirst(query, operations, createIfMissing, wc);
 	}
 
 
 	@Override
 	public <T> UpdateResults updateFirst(Query<T> query, T entity, boolean createIfMissing) {
-		// TODO Auto-generated method stub
-		return null;
+		return ds.updateFirst(query, entity, createIfMissing);
 	}
 	
 }

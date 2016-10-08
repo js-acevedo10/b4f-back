@@ -38,11 +38,11 @@ public class BikesDatastore implements Datastore{
 	
 	@Override
 	public <T, V> T get(Class<T> clazz, V id){
-		T ob =  ds.get(clazz, id);
-		if (((BikesObject)ob).deleted()){
-			return null;
-		}
-		return ob;
+//		T ob =  ds.get(clazz, id);
+//		if (((BikesObject)ob).deleted()){
+//			return null;
+//		}
+		return ds.get(clazz, id);
 	}
 	
 	@Override

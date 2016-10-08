@@ -116,7 +116,8 @@ public class BikeDAO {
 			String error = g.toJson(jsonMap);
 			return ResponseBiker.buildResponse(error, Response.Status.NOT_FOUND);
 		} else {
-			datastore.delete(resultBike);
+			resultBike.delete();
+			datastore.save(resultBike);
 			return ResponseBiker.buildResponse("Bike Deleted", Response.Status.OK);
 		}
 		

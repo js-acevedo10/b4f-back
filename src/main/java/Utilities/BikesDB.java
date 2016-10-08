@@ -13,7 +13,7 @@ public class BikesDB {
 	private static String MONGO_DB = System.getenv("MONGODB_NAME");
 	
 	final static Morphia morphia = new Morphia();
-	static BikesDatastore datastore;
+	static Datastore datastore;
 	static Boolean c = false;
 	static Gson gson;
 	
@@ -21,7 +21,7 @@ public class BikesDB {
 		if(datastore == null) {
 			morphia.mapPackage("DTO");
 			MongoClientURI mouri = new MongoClientURI(MONGO_URI);
-			datastore = new BikesDatastore(morphia.createDatastore(new MongoClient(mouri), MONGO_DB));
+			datastore = morphia.createDatastore(new MongoClient(mouri), MONGO_DB);
 		}
 		datastore.ensureCaps();
 		datastore.ensureIndexes();

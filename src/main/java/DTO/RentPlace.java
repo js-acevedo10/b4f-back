@@ -1,6 +1,5 @@
 package DTO;
 
-import java.util.Iterator;
 import java.util.List; 
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.annotations.Entity;
@@ -16,6 +15,7 @@ public class RentPlace extends BikesObject {
 	private String address;
 	private String name;
 	private int storingCapacity;
+	private int reservations;
 	
 	@Reference 
     private List<Bike> bikes;   
@@ -74,6 +74,17 @@ public class RentPlace extends BikesObject {
 				return;
 			}
 		}
+		reservations++;
 	}
+
+	public int getReservations() {
+		return reservations;
+	}
+
+	public void setReservations(int reservations) {
+		this.reservations = reservations;
+	}
+	
+	
 
 }

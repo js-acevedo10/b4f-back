@@ -12,16 +12,19 @@ public class BikeType extends BikesObject {
     
     public int capacity;
     
+    public String imageURL;
+    
     
 	
 	public BikeType() {
 		//Es necesario tener al menos el constructor vacío en el modelo de cada objeto
 	}
 
-	public BikeType(String name, int capacity) {
+	public BikeType(String name, int capacity, String imageURL) {
 		super();
 		this.name = name;
 		this.capacity = capacity;
+        this.imageURL = imageURL;
 	}
 
 	public ObjectId getId() {
@@ -47,5 +50,13 @@ public class BikeType extends BikesObject {
 	public void setCapacity(int capacity) {
 		this.capacity = capacity;
 	}
+    
+    public void setImageURL (String imageURL) {
+        this.imageURL = imageURL;
+    }
+    
+    public String getImageURL () {
+        return imageURL;
+    }
 
 }

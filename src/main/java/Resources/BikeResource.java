@@ -43,7 +43,7 @@ public class BikeResource {
 	}
 	
 	@GET
-	@Path("/reserve/{bikeId}")
+	@Path("/reserve")
 	@PermitAll
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)

@@ -1,12 +1,20 @@
 package DTO;
 
+import java.util.Date;
+
 import org.mongodb.morphia.annotations.Entity;
+import org.mongodb.morphia.annotations.Reference;
 
 @Entity
 public class Client extends User {
 
 	public double points;
 	public boolean suspended;
+	
+	@Reference
+	private Bike reserverdBike;
+	
+	private Date suspendAfter;
 	
 	public Client() {
 		super();
@@ -41,4 +49,23 @@ public class Client extends User {
 	public String toString() {
 		return this.id + " - " + this.name;
 	}
+
+	public Bike getReserverdBike() {
+		return reserverdBike;
+	}
+
+	public void setReserverdBike(Bike reserverdBike) {
+		this.reserverdBike = reserverdBike;
+	}
+
+	public Date getSuspendAfter() {
+		return suspendAfter;
+	}
+
+	public void setSuspendAfter(Date suspendAfter) {
+		this.suspendAfter = suspendAfter;
+	}
+	
+	
+	
 }

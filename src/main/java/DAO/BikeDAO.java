@@ -7,6 +7,7 @@ import java.util.Map;
 
 import javax.ws.rs.core.Response;
 
+import org.bson.Document;
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.query.Query;
@@ -16,6 +17,7 @@ import com.google.gson.JsonParser;
 
 import DTO.Bike;
 import DTO.BikeType;
+import DTO.Client;
 import DTO.RentPlace;
 import Utilities.BikesDB;
 import Utilities.ResponseBiker;
@@ -123,17 +125,29 @@ public class BikeDAO {
 		
 	}
 
-	public static Response reserveBikeWithId(ObjectId bikeId) {
+	public static Response reserveBikeWithId(Document reserveInfo) {
 		Datastore datastore = BikesDB.getDatastore();
-		Bike resultBike = datastore.get(Bike.class, bikeId);
+		String userId = reserveInfo.getString("userId");
+		String bikeId = reserveInfo.getString("bikeId");
+		Bike resultBike = datastore.get(Bike.class, new ObjectId(bikeId));
+		Client client = datastore.get(Client.class, new ObjectId(userId));
 		if (resultBike == null) {
 			jsonMap.clear();
 			jsonMap.put("Error", "Bike not found");
 			String error = g.toJson(jsonMap);
 			return ResponseBiker.buildResponse(error, Response.Status.NOT_FOUND);
-		} else {
+		} else if (client == null) {
+			jsonMap.clear();
+			jsonMap.put("Error", "User not found");
+			String error = g.toJson(jsonMap);
+			return ResponseBiker.buildResponse(error, Response.Status.NOT_FOUND);
+		}else{
 			resultBike.setReserveDate(new Date());
+			client.setReserverdBike(resultBike);
+			client.modify();
+			resultBike.modify();
 			datastore.save(resultBike);
+			datastore.save(client);
 			return ResponseBiker.buildResponse(resultBike, Response.Status.OK);
 		}
 	}

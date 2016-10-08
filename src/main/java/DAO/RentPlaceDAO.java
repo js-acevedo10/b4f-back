@@ -16,9 +16,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonParser;
 
 import DTO.Bike;
-import DTO.BikeType;
 import DTO.Client;
-import DTO.Penalty;
 import DTO.RentPlace;
 import DTO.Rental;
 import Utilities.BikesDB;
@@ -136,6 +134,7 @@ public class RentPlaceDAO {
 		}
 		
 		place.removeBike(bike);
+		place.modify();
 		datastore.save(place);
 		
 		Rental rent = new Rental(bike, client, new Date(), place);
@@ -143,37 +142,14 @@ public class RentPlaceDAO {
 		datastore.save(rent);
 		bike.addRental(rent.getId().toHexString());
 		bike.setAvailable(false);
+		bike.modify();
 		datastore.save(bike);
+		
+		client.setSuspendAfter(new Date(new Date().getTime()+(1000*3600*6)));
+		client.modify();
 		
 		return ResponseBiker.buildResponse("Rent Place rented bike: "+bikeId, Response.Status.OK);
 	
 	}
-//	public static Response returnBike(String placeId, String bikeId)
-//	{
-//		Datastore datastore = BikesDB.getDatastore();
-//		RentPlace place = datastore.createQuery(RentPlace.class)
-//				.field("id").equal(placeId)
-//				.get(); 
-//		if (place == null){
-//			jsonMap.clear();
-//			jsonMap.put("Error", "Rent Place not found");
-//			String error = g.toJson(jsonMap);
-//			return ResponseBiker.buildResponse(error, Response.Status.NOT_FOUND);
-//		}
-//		Bike bike = datastore.createQuery(Bike.class)
-//				.field("id").equal(bikeId)
-//				.get(); 
-//		if (bike == null){
-//			jsonMap.clear();
-//			jsonMap.put("Error", "Bike not found");
-//			String error = g.toJson(jsonMap);
-//			return ResponseBiker.buildResponse(error, Response.Status.NOT_FOUND);
-//		}
-//		place.addBike(bike);
-//		datastore.save(place);
-//
-//		return ResponseBiker.buildResponse("Rent Place gets bike: "+bikeId, Response.Status.OK);
-//	}
-	
 	
 }

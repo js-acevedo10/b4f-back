@@ -8,7 +8,7 @@ import org.mongodb.morphia.annotations.Id;
 import org.mongodb.morphia.annotations.Reference;
 
 @Entity
-public class Penalty {
+public class Penalty extends BikesObject {
 	
 	@Id
 	private ObjectId id;

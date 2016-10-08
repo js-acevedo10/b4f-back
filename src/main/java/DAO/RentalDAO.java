@@ -27,7 +27,7 @@ public class RentalDAO {
 	public static Response getRentals() {
 		Datastore datastore = BikesDB.getDatastore();
 
-		List<Rental> rentals = datastore.createQuery(Rental.class).field("delivered").equal(false).asList();
+		List<Rental> rentals = datastore.createQuery(Rental.class).asList();
 
 		if(rentals == null || rentals.isEmpty()) {
 			jsonMap.clear();
@@ -135,21 +135,26 @@ public class RentalDAO {
 					client.setPoints(client.getPoints() + 0.5);
 				}
 				
+				client.modify();
 				datastore.save(client);
+				
 				
 				rental.getBike().setAvailable(true);
 				rental.getBike().setReserve(false);
-				datastore.save(rental);
+				rental.getBike().modify();
+				datastore.save(rental.getBike());
 				
+				venue.modify();
 				venue.addBike(rental.getBike());
 				datastore.save(venue);
 				
+				rental.modify();
 				rental.setDelivered(true);
 				datastore.save(rental);
 				
 				
-				String certificate = g.toJson(jsonMap);
-				return ResponseBiker.buildResponse(certificate, Response.Status.OK);
+//				String certificate = g.toJson(jsonMap);
+				return ResponseBiker.buildResponse(jsonMap, Response.Status.OK);
 			}else{
 				jsonMap.clear();
 				jsonMap.put("Error", "User not authorized to return this bike.");

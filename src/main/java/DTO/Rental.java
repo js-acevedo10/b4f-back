@@ -8,7 +8,7 @@ import org.bson.types.ObjectId;
 import org.mongodb.morphia.annotations.Id;
 import org.mongodb.morphia.annotations.Reference;
 
-public class Rental {
+public class Rental extends BikesObject {
 	@Id
 	public ObjectId id;
 

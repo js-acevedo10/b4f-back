@@ -9,7 +9,7 @@ import org.mongodb.morphia.annotations.Reference;
 
 
 @Entity
-public class RentPlace {
+public class RentPlace extends BikesObject {
 	@Id
 	private ObjectId id;
 	

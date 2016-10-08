@@ -3,7 +3,7 @@ package DTO;
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.annotations.Id;
 
-public class User {
+public class User extends BikesObject {
 	
 	@Id
 	public ObjectId id;

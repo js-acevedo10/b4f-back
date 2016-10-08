@@ -125,9 +125,7 @@ public class BikeDAO {
 
 	public static Response reserveBikeWithId(String bikeId) {
 		Datastore datastore = BikesDB.getDatastore();
-		final Query<Bike> queryBike = datastore.createQuery(Bike.class);
-		queryBike.field("id").equal(new ObjectId(bikeId));
-		Bike resultBike = queryBike.get();
+		Bike resultBike = datastore.get(Bike.class, new ObjectId(bikeId));
 		if (resultBike == null) {
 			jsonMap.clear();
 			jsonMap.put("Error", "Bike not found");

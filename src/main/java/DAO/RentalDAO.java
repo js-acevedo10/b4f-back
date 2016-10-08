@@ -136,6 +136,7 @@ public class RentalDAO {
 				}
 				
 				client.modify();
+				client.setSuspendAfter(null);
 				datastore.save(client);
 				
 				

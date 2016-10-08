@@ -42,7 +42,11 @@ public class Client extends User {
 	}
 
 	public void setSuspended(boolean suspended) {
-		this.suspended = suspended;
+		if (suspendAfter != null && suspendAfter.before(new Date())){
+			this.suspended = true;
+		}else{
+			this.suspended = suspended;
+		}
 	}
 	
 	@Override
@@ -55,7 +59,11 @@ public class Client extends User {
 	}
 
 	public void setReserverdBike(Bike reserverdBike) {
-		this.reserverdBike = reserverdBike;
+		if (this.getModifiedAt() != null && this.getModifiedAt().getTime()+(1000*3600*2) < new Date().getTime()){
+			this.reserverdBike = null;
+		}else{
+			this.reserverdBike = reserverdBike;
+		}
 	}
 
 	public Date getSuspendAfter() {

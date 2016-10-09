@@ -30,6 +30,14 @@ public class RentalResource {
 	public static Response getRentals() {
 		return RentalDAO.getRentals();
 	}
+	
+	@GET
+	@Path("/{clientId}")
+	@RolesAllowed(Roles.CLIENT)
+	@Produces(MediaType.APPLICATION_JSON)
+	public static Response getRentals(@PathParam("clientId") String client) {
+		return RentalDAO.getRentals(client);
+	}
 
 	//-------------------------------------------------------------------
 	//--------------------------------PUT--------------------------------

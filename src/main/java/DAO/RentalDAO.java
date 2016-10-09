@@ -39,6 +39,29 @@ public class RentalDAO {
 		}
 	}
 	
+	public static Response getRentals(String clientId) {
+		Datastore datastore = BikesDB.getDatastore();
+		Client client = datastore.get(Client.class, new ObjectId(clientId));
+		
+		if (client == null){
+			jsonMap.clear();
+			jsonMap.put("Error", "User not found.");
+			String error = g.toJson(jsonMap);
+			return ResponseBiker.buildResponse(error, Response.Status.NOT_FOUND);
+		}
+		
+		List<Rental> rentals = datastore.createQuery(Rental.class).field("client").equal(client).asList();
+
+		if(rentals == null || rentals.isEmpty()) {
+			jsonMap.clear();
+			jsonMap.put("Error", "No rentals found for this user.");
+			String error = g.toJson(jsonMap);
+			return ResponseBiker.buildResponse(error, Response.Status.NOT_FOUND);
+		} else {
+			return ResponseBiker.buildResponse(rentals, Response.Status.OK);
+		}
+	}
+	
 	public static Response returnBike(Document returnInfo) {
 		Datastore datastore = BikesDB.getDatastore();
 		

@@ -202,6 +202,15 @@ public class RentalDAO {
 			String error = g.toJson(jsonMap);
 			return ResponseBiker.buildResponse(error, Response.Status.NOT_FOUND);
 		} else {
+			Client c = datastore.createQuery(Client.class).field("mail").equal(user.getString("mail")).get();
+			
+			if (c == null){
+				jsonMap.clear();
+				jsonMap.put("Error", "User not found.");
+				String error = g.toJson(jsonMap);
+				return ResponseBiker.buildResponse(error, Response.Status.NOT_FOUND);
+			}
+			
 			rental.addAllowedUser(user.getString("mail"));
 			datastore.save(rental);
 			return ResponseBiker.buildResponse(rental, Response.Status.OK);

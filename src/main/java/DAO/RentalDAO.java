@@ -202,7 +202,7 @@ public class RentalDAO {
 			String error = g.toJson(jsonMap);
 			return ResponseBiker.buildResponse(error, Response.Status.NOT_FOUND);
 		} else {
-			Client c = datastore.createQuery(Client.class).field("mail").equal(user.getString("mail")).get();
+			Client c = datastore.createQuery(Client.class).field("email").equal(user.getString("mail")).get();
 			
 			if (c == null){
 				jsonMap.clear();

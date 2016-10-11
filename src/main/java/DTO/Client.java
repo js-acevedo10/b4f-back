@@ -12,7 +12,7 @@ public class Client extends User {
 	public boolean suspended;
 	
 	@Reference
-	private Bike reserverdBike;
+	private Bike reservedBike;
 	
 	private Date suspendAfter;
 	
@@ -55,14 +55,14 @@ public class Client extends User {
 	}
 
 	public Bike getReserverdBike() {
-		return reserverdBike;
+		return reservedBike;
 	}
 
 	public void setReserverdBike(Bike reserverdBike) {
 		if (this.getModifiedAt() != null && this.getModifiedAt().getTime()+(1000*3600*2) < new Date().getTime()){
-			this.reserverdBike = null;
+			this.reservedBike = null;
 		}else{
-			this.reserverdBike = reserverdBike;
+			this.reservedBike = reserverdBike;
 		}
 	}
 

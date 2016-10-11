@@ -7,6 +7,7 @@ import java.util.Map;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
+import org.bson.Document;
 import org.bson.types.ObjectId;
 
 import com.google.gson.Gson;
@@ -48,6 +49,17 @@ public class UserDAO {
 		return ResponseBiker.buildResponse(error, Status.NOT_FOUND);
 	}
 
+	public static Response getClient(Document mail) {
+		Client client = BikesDB.getDatastore().createQuery(Client.class).field("email").equal(mail.getString("mail")).get();
+		if(client != null) {
+			return ResponseBiker.buildResponse(client, Status.OK);
+		}
+		jsonMap.clear();
+		jsonMap.put("Error", "User not found.");
+		String error = g.toJson(jsonMap);
+		return ResponseBiker.buildResponse(error, Status.NOT_FOUND);
+	}
+	
 	public static Response addClient(Client client) {
 		client.points = 0;
 		client.suspended = false;

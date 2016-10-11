@@ -13,6 +13,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.bson.Document;
+
 import DAO.UserDAO;
 import DTO.Client;
 import Security.Roles;
@@ -39,6 +41,15 @@ public class ClientResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getClient(@PathParam("userId") String userId) {
 		return UserDAO.getClient(userId);
+	}
+	
+	@Path("/m")
+	@PermitAll
+	@PUT
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getClient(Document mail) {
+		return UserDAO.getClient(mail);
 	}
 	
 	//------------------------------------------------

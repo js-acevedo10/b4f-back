@@ -141,6 +141,8 @@ public class RentPlaceDAO {
 				return ResponseBiker.buildResponse(error, Response.Status.CONFLICT);
 			}
 			client.setReserverdBike(null);
+			bike.setReserve(false);
+			bike.setReserveDate(null);
 		}
 		
 		place.removeBike(bike);

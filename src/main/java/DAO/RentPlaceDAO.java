@@ -133,6 +133,16 @@ public class RentPlaceDAO {
 			return ResponseBiker.buildResponse(error, Response.Status.CONFLICT);
 		}
 		
+		if (client.getReserverdBike() != null){
+			if (client.getReserverdBike() != bike){
+				jsonMap.clear();
+				jsonMap.put("Error", "Client has already reserved a diferent bike from this");
+				String error = g.toJson(jsonMap);
+				return ResponseBiker.buildResponse(error, Response.Status.CONFLICT);
+			}
+			client.setReserverdBike(null);
+		}
+		
 		place.removeBike(bike);
 		place.modify();
 		datastore.save(place);
@@ -147,6 +157,7 @@ public class RentPlaceDAO {
 		
 		client.setSuspendAfter(new Date(new Date().getTime()+(1000*3600*6)));
 		client.modify();
+		datastore.save(client);
 		
 		return ResponseBiker.buildResponse("Rent Place rented bike: "+bikeId, Response.Status.OK);
 	

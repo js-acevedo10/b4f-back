@@ -144,7 +144,11 @@ public class RentPlaceDAO {
 		}
 		
 		if (client.getReserverdBike() != null){
-			if (client.getReserverdBike() != bike){
+			System.out.println(client.getReserverdBike().getBrand());
+			System.out.println(bike.getBrand());
+			System.out.println(bike.getId());
+			System.out.println(client.getReserverdBike().getId());
+			if (!client.getReserverdBike().getId().equals(bike.getId())){
 				jsonMap.clear();
 				jsonMap.put("Error", "Client has already reserved a diferent bike from this");
 				String error = g.toJson(jsonMap);

@@ -105,13 +105,7 @@ public class RentPlaceDAO {
 		String userMail = rentInfo.getString("userMail");
 		
 		Datastore datastore = BikesDB.getDatastore();
-		RentPlace place = datastore.createQuery(RentPlace.class).field("name").equal(placeName).get();
-		if (place == null){
-			jsonMap.clear();
-			jsonMap.put("Error", "Rent Place not found");
-			String error = g.toJson(jsonMap);
-			return ResponseBiker.buildResponse(error, Response.Status.NOT_FOUND);
-		}
+		
 		Bike bike = datastore.get(Bike.class, new ObjectId(bikeId));
 		if (bike == null){
 			jsonMap.clear();
@@ -119,6 +113,22 @@ public class RentPlaceDAO {
 			String error = g.toJson(jsonMap);
 			return ResponseBiker.buildResponse(error, Response.Status.NOT_FOUND);
 		}
+		
+		RentPlace place = null;
+		
+		if (placeName == null || placeName.equals("")){
+			place = datastore.createQuery(RentPlace.class).field("bikes").hasThisElement(bike).get();
+		}
+		else{
+			place = datastore.createQuery(RentPlace.class).field("name").equal(placeName).get();
+		}
+		if (place == null){
+			jsonMap.clear();
+			jsonMap.put("Error", "Rent Place not found");
+			String error = g.toJson(jsonMap);
+			return ResponseBiker.buildResponse(error, Response.Status.NOT_FOUND);
+		}
+		
 		Client client = datastore.createQuery(Client.class).field("email").equal(userMail).get();
 		if (client == null){
 			jsonMap.clear();

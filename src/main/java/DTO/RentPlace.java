@@ -6,6 +6,8 @@ import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
 import org.mongodb.morphia.annotations.Reference;
 
+import Utilities.LatLng;
+
 
 @Entity
 public class RentPlace extends BikesObject {
@@ -16,6 +18,8 @@ public class RentPlace extends BikesObject {
 	private String name;
 	private int storingCapacity;
 	private int reservations;
+	
+	private LatLng coordinates;
 	
 	@Reference 
     private List<Bike> bikes;   
@@ -83,6 +87,14 @@ public class RentPlace extends BikesObject {
 
 	public void setReservations(int reservations) {
 		this.reservations = reservations;
+	}
+
+	public LatLng getCoordinates() {
+		return coordinates;
+	}
+
+	public void setCoordinates(LatLng coordinates) {
+		this.coordinates = coordinates;
 	}
 	
 	

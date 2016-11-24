@@ -63,7 +63,9 @@ public class UserDAO {
 	public static Response addClient(Client client) {
 		client.points = 0;
 		client.suspended = false;
-		BikesDB.getDatastore().save(client);
+		if(BikesDB.getDatastore().save(client) == null) {
+			AuthDAO.login("", "");
+		}
 		return AuthDAO.login(client.email, client.password);
 	}
 
@@ -115,7 +117,9 @@ public class UserDAO {
 	}
 
 	public static Response addAdmin(Admin admin) {
-		BikesDB.getDatastore().save(admin);
+		if(BikesDB.getDatastore().save(admin) == null) {
+			AuthDAO.login("", "");
+		}
 		return AuthDAO.login(admin.email, admin.password);
 	}
 
@@ -152,7 +156,9 @@ public class UserDAO {
 	}
 
 	public static Response addManager(Manager manager) {
-		BikesDB.getDatastore().save(manager);
+		if(BikesDB.getDatastore().save(manager) == null) {
+			AuthDAO.login("", "");
+		}
 		return AuthDAO.login(manager.email, manager.password);
 	}
 

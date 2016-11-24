@@ -60,34 +60,34 @@ public class AuthDAO {
 				} else {
 					String token = "Basic " + Base64.encodeAsString(admin.getEmail() + ":" + admin.getPassword());
 					Document resp = new Document();
-					resp.put("id", admin.getId().toHexString());
-					resp.put("name", admin.getName());
-					resp.put("role", "admin");
-					resp.put("email", admin.getEmail());
-					resp.put("token", token);
+					resp.put(Base64.encodeAsString("id"), Base64.encodeAsString(admin.getId().toHexString()));
+					resp.put(Base64.encodeAsString("name"), Base64.encodeAsString(admin.getName()));
+					resp.put(Base64.encodeAsString("role"), Base64.encodeAsString("admin"));
+					resp.put(Base64.encodeAsString("email"), Base64.encodeAsString(admin.getEmail()));
+					resp.put(Base64.encodeAsString("token"), Base64.encodeAsString(token));
 					
 					return ResponseBiker.buildResponse(resp, Response.Status.OK);
 				}
 			} else {
 				String token = "Basic " + Base64.encodeAsString(manager.getEmail() + ":" + manager.getPassword());
 				Document resp = new Document();
-				resp.put("id", manager.getId().toHexString());
-				resp.put("name", manager.getName());
-				resp.put("role", "manager");
-				resp.put("email", manager.getEmail());
-				resp.put("token", token);
+				resp.put(Base64.encodeAsString("id"), Base64.encodeAsString(manager.getId().toHexString()));
+				resp.put(Base64.encodeAsString("name"), Base64.encodeAsString(manager.getName()));
+				resp.put(Base64.encodeAsString("role"), Base64.encodeAsString("manager"));
+				resp.put(Base64.encodeAsString("email"), Base64.encodeAsString(manager.getEmail()));
+				resp.put(Base64.encodeAsString("token"), Base64.encodeAsString(token));
 				return ResponseBiker.buildResponse(resp, Response.Status.OK);
 			}
 		} else {
 			String token = "Basic " + Base64.encodeAsString(client.getEmail() + ":" + client.getPassword());
 			Document resp = new Document();
-			resp.put("id", client.getId().toHexString());
-			resp.put("name", client.getName());
-			resp.put("role", "client");
-			resp.put("email", client.getEmail());
-			resp.put("token", token);
-			resp.put("points", client.getPoints());
-			resp.put("suspended", client.isSuspended());
+			resp.put(Base64.encodeAsString("id"), Base64.encodeAsString(client.getId().toHexString()));
+			resp.put(Base64.encodeAsString("name"), Base64.encodeAsString(client.getName()));
+			resp.put(Base64.encodeAsString("role"), Base64.encodeAsString("client"));
+			resp.put(Base64.encodeAsString("email"), Base64.encodeAsString(client.getEmail()));
+			resp.put(Base64.encodeAsString("token"), Base64.encodeAsString(token));
+			resp.put(Base64.encodeAsString("points"), Base64.encodeAsString(client.getPoints()+""));
+			resp.put(Base64.encodeAsString("suspended"), Base64.encodeAsString(client.isSuspended()+""));
 			if(client.isSuspended()){
 				jsonMap.clear();
 				jsonMap.put("Error", "User is suspended.");

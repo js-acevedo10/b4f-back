@@ -1,14 +1,6 @@
 package Utilities;
 
-import java.io.Serializable;
-
-public class LatLng implements Serializable {
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -8533506251528507940L;
-	
+public class LatLng {	
 	
 	private Double latitude;
 	private Double longitude;

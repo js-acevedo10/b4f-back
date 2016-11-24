@@ -63,10 +63,12 @@ public class UserDAO {
 	public static Response addClient(Client client) {
 		client.points = 0;
 		client.suspended = false;
-		if(BikesDB.getDatastore().save(client) == null) {
-			AuthDAO.login("", "");
+		try {
+			BikesDB.getDatastore().save(client);
+			return AuthDAO.login(client.email, client.password);
+		} catch(Exception e) {
+			return ResponseBiker.buildResponse("{\"Error\":\"Correo Duplicado\"}", Response.Status.SEE_OTHER);
 		}
-		return AuthDAO.login(client.email, client.password);
 	}
 
 	public static Response updateClient(Client client) {
@@ -117,10 +119,12 @@ public class UserDAO {
 	}
 
 	public static Response addAdmin(Admin admin) {
-		if(BikesDB.getDatastore().save(admin) == null) {
-			AuthDAO.login("", "");
+		try {
+			BikesDB.getDatastore().save(admin);
+			return AuthDAO.login(admin.email, admin.password);
+		} catch(Exception e) {
+			return ResponseBiker.buildResponse("{\"Error\":\"Correo Duplicado\"}", Response.Status.SEE_OTHER);
 		}
-		return AuthDAO.login(admin.email, admin.password);
 	}
 
 	public static Response updateAdmin(Admin admin) {
@@ -156,10 +160,12 @@ public class UserDAO {
 	}
 
 	public static Response addManager(Manager manager) {
-		if(BikesDB.getDatastore().save(manager) == null) {
-			AuthDAO.login("", "");
+		try {
+			BikesDB.getDatastore().save(manager);
+			return AuthDAO.login(manager.email, manager.password);
+		} catch(Exception e) {
+			return ResponseBiker.buildResponse("{\"Error\":\"Correo Duplicado\"}", Response.Status.SEE_OTHER);
 		}
-		return AuthDAO.login(manager.email, manager.password);
 	}
 
 	public static Response updateManager(Manager manager) {

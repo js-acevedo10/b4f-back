@@ -101,6 +101,7 @@ public class BikeDAO {
 			return ResponseBiker.buildResponse(error, Response.Status.NOT_FOUND);
 		} else {
 			bike.setId(resultBike.getId());
+			bike.setBikeType(resultBike.getBikeType());
 			datastore.save(bike);
 			return ResponseBiker.buildResponse(bike, Response.Status.OK);
 		}

@@ -89,6 +89,7 @@ public class PenaltyDAO {
 				penalty.setFee(0.0);
 				penalty.setSuspensionEnd(new Date());
 				penalty.setTrainingRequiered(true);
+				penalty.setPending(false);
 				//asistencia obligatorio a capacitación pedagógica
 			}
 			else if (points > -200){

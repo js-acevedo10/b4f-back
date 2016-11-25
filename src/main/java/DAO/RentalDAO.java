@@ -161,12 +161,11 @@ public class RentalDAO {
 				client.modify();
 				client.setSuspendAfter(null);
 				datastore.save(client);
-				
+				rental.getBike().setAvailable(true);
 				if(returnInfo.getBoolean("mantenimiento")) {
 					rental.getBike().setMantenimiento(true);
+					rental.getBike().setAvailable(false);
 				}
-				
-				rental.getBike().setAvailable(true);
 				rental.getBike().setReserve(false);
 				rental.getBike().modify();
 				rental.setDrop(venue);

@@ -100,6 +100,7 @@ public class BikeDAO {
 			String error = g.toJson(jsonMap);
 			return ResponseBiker.buildResponse(error, Response.Status.NOT_FOUND);
 		} else {
+			bike.setId(resultBike.getId());
 			datastore.save(bike);
 			return ResponseBiker.buildResponse(bike, Response.Status.OK);
 		}

@@ -1,6 +1,5 @@
 package DTO;
 
-import java.util.Calendar;
 import java.util.Date;
 
 import org.bson.types.ObjectId;
@@ -8,7 +7,7 @@ import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
 
 @Entity("meta")
-public class Meta {
+public class Meta extends BikesObject {
 
 	@Id
 	public ObjectId id;

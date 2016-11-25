@@ -64,10 +64,6 @@ public class AuthenticationFilter implements javax.ws.rs.container.ContainerRequ
                 final String username = tokenizer.nextToken();
                 final String password = tokenizer.nextToken();
                   
-                //Esto se debe quitar pero es para que verifiquen sus requests
-                System.out.println(username + " QUITAR URGENTE");
-                System.out.println(password + " QUITAR URGENTE");
-                  
                 //Verifico si el rol coincide con las restricciones del recurso
                 if(method.isAnnotationPresent(RolesAllowed.class)) {
                 	//Aqui pedimos los roles permitidos del método como tal

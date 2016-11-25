@@ -25,7 +25,7 @@ public class BikesDB {
 	static BikesDatastore datastore;
 	static Boolean c = false;
 	static Gson gson;
-	private static long consolidated = 0;
+//	private static long consolidated = 0;
 	
 	private static Thread bg_job;
 	
@@ -37,7 +37,7 @@ public class BikesDB {
 		}
 		datastore.ensureCaps();
 		datastore.ensureIndexes();
-		if (bg_job == null && (consolidated == 0 || System.currentTimeMillis()-consolidated > 21600000)){
+		if (bg_job == null){
 			bg_job = new Thread(new Runnable() {
 				
 				@Override
@@ -81,7 +81,7 @@ public class BikesDB {
 		else{
 			if (!bg_job.isAlive()){
 				bg_job = null;
-				consolidated = System.currentTimeMillis();
+//				consolidated = System.currentTimeMillis();
 			}
 		}
 		return datastore;

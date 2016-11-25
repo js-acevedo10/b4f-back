@@ -1,5 +1,7 @@
 package DAO;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -48,8 +50,64 @@ public class PenaltyDAO {
 		}
 	}
 
-	public static Response penalize(String username, Penalty penalty){
+	public static Response penalize(String username){
 		Datastore datastore = BikesDB.getDatastore();
+		
+		Client client = datastore.createQuery(Client.class)
+				.field("email").equal(username)
+				.get(); 
+		if (client == null){
+			jsonMap.clear();
+			jsonMap.put("Error", "User not found");
+			String error = g.toJson(jsonMap);
+			return ResponseBiker.buildResponse(error, Response.Status.NOT_FOUND);
+		}
+		Double points = client.getPoints();
+		client.setPoints(0);
+		Penalty penalty = null;
+		
+		if (points > 50){
+			//cada punto equivale a 100 pesos que pueden ser redimidos como bonos
+			double prev = client.getBonus();
+			client.setBonus(prev+(points*100));
+			
+			datastore.save(client);
+			
+			jsonMap.clear();
+			jsonMap.put("Success", "User bonus loaded to account");
+			String response = g.toJson(jsonMap);
+			return ResponseBiker.buildResponse(response, Response.Status.OK);
+		}
+		else if (points < 0){
+			penalty = new Penalty();
+			penalty.setPending(true);
+			penalty.setSuspensionStart(new Date());
+
+			if (points > -100){
+				penalty.setFee(0.0);
+				penalty.setSuspensionEnd(new Date());
+				penalty.setTrainingRequiered(true);
+				//asistencia obligatorio a capacitación pedagógica
+			}
+			else if (points > -200){
+				//cada punto negativo corresponde a 500 pesos de multa
+				penalty.setFee((-1)*points*500);
+				penalty.setSuspensionEnd(new Date());
+				penalty.setTrainingRequiered(false);
+			}
+			else{
+				//cada punto negativo corresponde a 7000 pesos por punto y suspensión del
+//				servicio por 3 años
+				penalty.setFee((-1)*points*7000);
+				Calendar c = Calendar.getInstance();
+				c.setTime(new Date());
+				c.add(Calendar.YEAR, 3);
+				penalty.setSuspensionEnd(c.getTime());
+				penalty.setTrainingRequiered(false);
+				client.setSuspended(true);
+			}
+		}
+		
 		if (penalty != null){
 			if (penalty.getFee() < 0 || penalty.getSuspensionEnd().before(penalty.getSuspensionStart())){
 				jsonMap.clear();
@@ -57,17 +115,8 @@ public class PenaltyDAO {
 				String error = g.toJson(jsonMap);
 				return ResponseBiker.buildResponse(error, Response.Status.BAD_REQUEST);
 			}
-
-			Client client = datastore.createQuery(Client.class)
-					.field("email").equal(username)
-					.get(); 
-			if (client == null){
-				jsonMap.clear();
-				jsonMap.put("Error", "User not found");
-				String error = g.toJson(jsonMap);
-				return ResponseBiker.buildResponse(error, Response.Status.NOT_FOUND);
-			}
 			
+			datastore.save(client);
 			penalty.setClient(client);
 			datastore.save(penalty);
 

@@ -16,6 +16,8 @@ public class Client extends User {
 	
 	private Date suspendAfter;
 	
+	private double bonus;
+	
 	public Client() {
 		super();
 	}
@@ -72,6 +74,14 @@ public class Client extends User {
 
 	public void setSuspendAfter(Date suspendAfter) {
 		this.suspendAfter = suspendAfter;
+	}
+
+	public double getBonus() {
+		return bonus;
+	}
+
+	public void setBonus(double bonus) {
+		this.bonus = bonus;
 	}
 	
 	

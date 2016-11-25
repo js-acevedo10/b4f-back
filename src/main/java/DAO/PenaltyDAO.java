@@ -26,9 +26,7 @@ public class PenaltyDAO {
 	public static Response getPenalties(String username) {
 		Datastore datastore = BikesDB.getDatastore();
 
-		Client client = datastore.createQuery(Client.class)
-				.field("email").equal(username)
-				.get(); 
+		Client client = datastore.get(Client.class, new ObjectId(username));
 		if (client == null){
 			jsonMap.clear();
 			jsonMap.put("Error", "User not found");

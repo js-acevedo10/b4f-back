@@ -22,10 +22,10 @@ import Utilities.ResponseBiker;
 
 public class AuthDAO {
 	
-	public static void main(String[] args) {
-		System.out.println(login("juansantiago.acevedocorrea@gmail.com", "1234567").getEntity().toString());
-	}
-	
+//	public static void main(String[] args) {
+//		System.out.println(login("juansantiago.acevedocorrea@gmail.com", "1234567").getEntity().toString());
+//	}
+//	
 	public static JsonParser jsonParser = new JsonParser();
 	public static Map<String, String> jsonMap = new HashMap<String, String>();
 	public static Gson g = new Gson();

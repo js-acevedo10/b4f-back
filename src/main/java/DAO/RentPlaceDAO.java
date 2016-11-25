@@ -100,7 +100,6 @@ public class RentPlaceDAO {
 	}
 	public static Response rentBike(Document rentInfo)
 	{
-		System.out.println(rentInfo);
 		String placeName = rentInfo.getString("venueName");
 		String bikeId = rentInfo.getString("bikeId"); 
 		String userMail = rentInfo.getString("userMail");
@@ -145,10 +144,6 @@ public class RentPlaceDAO {
 		}
 		
 		if (client.getReserverdBike() != null){
-			System.out.println(client.getReserverdBike().getBrand());
-			System.out.println(bike.getBrand());
-			System.out.println(bike.getId());
-			System.out.println(client.getReserverdBike().getId());
 			if (!client.getReserverdBike().getId().equals(bike.getId())){
 				jsonMap.clear();
 				jsonMap.put("Error", "Client has already reserved a diferent bike from this");

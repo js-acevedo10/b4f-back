@@ -16,6 +16,7 @@ import com.google.gson.Gson;
 import DTO.Client;
 import DTO.RentPlace;
 import DTO.Rental;
+import DTO.Reparacion;
 import Utilities.BikesDB;
 import Utilities.ResponseBiker;
 
@@ -86,54 +87,60 @@ public class RentalDAO {
 			if (returningMail.equals(rental.getClient().getEmail()) || rental.getAllowedUsers().contains(returningMail)){
 
 				Double fee = 0.0;
-				if (returnInfo.getBoolean("pedals", false)){
-					fee+=18000;
+				
+				List<String> damaged =  (List<String>) returnInfo.get("selected");
+				
+				for (String fix_id : damaged){
+					fee+=datastore.get(Reparacion.class, fix_id).getFee();
 				}
-				if (returnInfo.getBoolean("saddle", false)){
-					fee+=25000;
-				}
-				if (returnInfo.getBoolean("handlebars", false)){
-					fee+=6000;
-				}
-				if (returnInfo.getBoolean("brakes", false)){
-					fee+=200000;
-				}
-				if (returnInfo.getBoolean("shifter", false)){
-					fee+=30000;
-				}
-				if (returnInfo.getBoolean("holder", false)){
-					fee+=18000;
-				}
-				if (returnInfo.getBoolean("frontGrid", false)){
-					fee+=24000;
-				}
-				if (returnInfo.getBoolean("backGrid", false)){
-					fee+=24000;
-				}
-				if (returnInfo.getBoolean("reflective", false)){
-					fee+=6000;
-				}
-				if (returnInfo.getBoolean("plate", false)){
-					fee+=30000;
-				}
-				if (returnInfo.getBoolean("bikeBacking", false)){
-					fee+=15000;
-				}
-				if (returnInfo.getBoolean("frontFender", false)){
-					fee+=16000;
-				}
-				if (returnInfo.getBoolean("backFender", false)){
-					fee+=16000;
-				}
-				if (returnInfo.getBoolean("frame", false)){
-					fee+=130000;
-				}
-				if (returnInfo.getBoolean("octopus", false)){
-					fee+=8000;
-				}
-				if (returnInfo.getBoolean("handle", false)){
-					fee+=48000;
-				}
+//				if (returnInfo.getBoolean("pedals", false)){
+//					fee+=18000;
+//				}
+//				if (returnInfo.getBoolean("saddle", false)){
+//					fee+=25000;
+//				}
+//				if (returnInfo.getBoolean("handlebars", false)){
+//					fee+=6000;
+//				}
+//				if (returnInfo.getBoolean("brakes", false)){
+//					fee+=200000;
+//				}
+//				if (returnInfo.getBoolean("shifter", false)){
+//					fee+=30000;
+//				}
+//				if (returnInfo.getBoolean("holder", false)){
+//					fee+=18000;
+//				}
+//				if (returnInfo.getBoolean("frontGrid", false)){
+//					fee+=24000;
+//				}
+//				if (returnInfo.getBoolean("backGrid", false)){
+//					fee+=24000;
+//				}
+//				if (returnInfo.getBoolean("reflective", false)){
+//					fee+=6000;
+//				}
+//				if (returnInfo.getBoolean("plate", false)){
+//					fee+=30000;
+//				}
+//				if (returnInfo.getBoolean("bikeBacking", false)){
+//					fee+=15000;
+//				}
+//				if (returnInfo.getBoolean("frontFender", false)){
+//					fee+=16000;
+//				}
+//				if (returnInfo.getBoolean("backFender", false)){
+//					fee+=16000;
+//				}
+//				if (returnInfo.getBoolean("frame", false)){
+//					fee+=130000;
+//				}
+//				if (returnInfo.getBoolean("octopus", false)){
+//					fee+=8000;
+//				}
+//				if (returnInfo.getBoolean("handle", false)){
+//					fee+=48000;
+//				}
 				jsonMap.clear();
 				jsonMap.put("Fee", ""+fee);
 				

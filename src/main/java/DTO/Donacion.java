@@ -3,7 +3,7 @@ package DTO;
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.annotations.Id;
 
-public class Donacion {
+public class Donacion extends BikesObject {
 	
 	@Id ObjectId id;
 	public int amount;
@@ -11,7 +11,7 @@ public class Donacion {
 	public String userId;
 	
 	public Donacion() {
-		
+		super();
 	}
 	
 	public Donacion(int amount, String fecha, String userId) {

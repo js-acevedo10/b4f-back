@@ -14,7 +14,7 @@ import org.mongodb.morphia.query.Query;
 import com.google.gson.Gson;
 import com.google.gson.JsonParser;
 
-
+import DTO.Bike;
 import DTO.Reparacion;
 import Utilities.BikesDB;
 import Utilities.ResponseBiker;
@@ -38,6 +38,21 @@ public class ReparacionDAO {
 			jsonMap.put("Error", "Reparaciones not found.");
 			String error = g.toJson(jsonMap);
 			return ResponseBiker.buildResponse(error, Status.NOT_FOUND);
+		}
+		
+		public static Response getReparacionWithId(String reparacionId) {
+			Datastore datastore = BikesDB.getDatastore();
+			final Query<Reparacion> queryReparacion = datastore.createQuery(Reparacion.class);
+			queryReparacion.field("id").equal(new ObjectId(reparacionId));
+			Reparacion reparacion = queryReparacion.get();
+			if (reparacion  == null) {
+				jsonMap.clear();
+				jsonMap.put("Error", "Reparacion not found");
+				String error = g.toJson(jsonMap);
+				return ResponseBiker.buildResponse(error, Response.Status.NOT_FOUND);
+			} else {
+				return ResponseBiker.buildResponse(reparacion, Response.Status.OK);
+			}
 		}
 		
 		

@@ -16,7 +16,7 @@ import javax.ws.rs.core.Response;
 
 import org.bson.types.ObjectId;
 
-
+import DAO.BikeDAO;
 import DAO.ReparacionDAO;
 import DTO.Reparacion;
 import Security.Roles;
@@ -32,6 +32,14 @@ public class RepearacionResource {
 			@Produces(MediaType.APPLICATION_JSON)
 			public Response getReparaciones() {
 				return ReparacionDAO.getReparaciones();
+			}
+			
+			@GET
+			@Path("/{reparacionId}")
+			@RolesAllowed(Roles.ADMIN)
+			@Produces(MediaType.APPLICATION_JSON)
+			public Response getBikeWithId(@PathParam("reparacionId") String reparacionId) {
+				return ReparacionDAO.getReparacionWithId(reparacionId);
 			}
 			
 			//-------------------------------------------------------------------

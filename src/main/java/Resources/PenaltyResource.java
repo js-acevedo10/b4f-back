@@ -40,7 +40,7 @@ public class PenaltyResource {
 	@Path("/{idUser}")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public static Response penalize(@PathParam("isUser") String username) {
+	public static Response penalize(@PathParam("idUser") String username) {
 		return PenaltyDAO.penalize(username);
 	}
 

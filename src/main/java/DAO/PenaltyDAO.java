@@ -53,9 +53,7 @@ public class PenaltyDAO {
 	public static Response penalize(String username){
 		Datastore datastore = BikesDB.getDatastore();
 		
-		Client client = datastore.createQuery(Client.class)
-				.field("email").equal(username)
-				.get(); 
+		Client client = datastore.get(Client.class, new ObjectId(username)); 
 		if (client == null){
 			jsonMap.clear();
 			jsonMap.put("Error", "User not found");
@@ -77,6 +75,12 @@ public class PenaltyDAO {
 			jsonMap.put("Success", "User bonus loaded to account");
 			String response = g.toJson(jsonMap);
 			return ResponseBiker.buildResponse(response, Response.Status.OK);
+		}
+		else if (points >= 0){		
+			jsonMap.clear();
+			jsonMap.put("Not Modified", "User has not accounted enough ponts");
+			String response = g.toJson(jsonMap);
+			return ResponseBiker.buildResponse(response, Response.Status.NOT_MODIFIED);
 		}
 		else if (points < 0){
 			penalty = new Penalty();

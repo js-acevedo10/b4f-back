@@ -28,7 +28,7 @@ public class ClientResource {
 	//----------------------GET-----------------------
 	//------------------------------------------------
 	
-	@RolesAllowed(Roles.ADMIN)
+	@RolesAllowed({Roles.ADMIN, Roles.MANAGER})
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getClients() {

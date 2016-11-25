@@ -91,7 +91,7 @@ public class RentalDAO {
 				List<String> damaged =  (List<String>) returnInfo.get("selected");
 				
 				for (String fix_id : damaged){
-					fee+=datastore.get(Reparacion.class, fix_id).getFee();
+					fee+=datastore.get(Reparacion.class, new ObjectId(fix_id)).getFee();
 				}
 //				if (returnInfo.getBoolean("pedals", false)){
 //					fee+=18000;

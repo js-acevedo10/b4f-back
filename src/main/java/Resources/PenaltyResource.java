@@ -14,7 +14,6 @@ import javax.ws.rs.core.Response;
 import org.bson.types.ObjectId;
 
 import DAO.PenaltyDAO;
-import DTO.Penalty;
 import Security.Roles;
 
 @Path("/penalty")
@@ -25,7 +24,7 @@ public class PenaltyResource {
 	//-------------------------------------------------------------------
 
 	@GET
-	@RolesAllowed(Roles.ADMIN)
+	@RolesAllowed({Roles.ADMIN, Roles.CLIENT})
 	@Path("/{idUser}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public static Response getPenalties(@PathParam("idUser") String user) {

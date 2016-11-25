@@ -71,8 +71,6 @@ public class ReparacionDAO {
 				return ResponseBiker.buildResponse(error, Response.Status.NOT_FOUND);
 			} else {
 				reparacion.setId(resultReparacion.getId());
-				reparacion.setFixName(resultReparacion.getFixName());
-				reparacion.setFee(resultReparacion.getFee());
 				datastore.save(reparacion);
 				return ResponseBiker.buildResponse(reparacion, Response.Status.OK);
 			}

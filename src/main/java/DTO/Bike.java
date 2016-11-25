@@ -27,6 +27,8 @@ public class Bike extends BikesObject {
     public Date reserveDate;
 	
     public Boolean reserve;
+    
+    public Boolean mantenimiento;
 
 	public Boolean getReserve() {
 		return reserve;
@@ -48,6 +50,7 @@ public class Bike extends BikesObject {
 		super();
 		this.reserveDate=null;
 		this.reserve =false;
+		this.mantenimiento = false;
         this.history = new ArrayList<String>();
         this.rentals = new ArrayList<String>();
 	}
@@ -62,6 +65,7 @@ public class Bike extends BikesObject {
         this.history = new ArrayList<String>();
         this.rentals = new ArrayList<String>();
         this.reserve = false;
+        this.mantenimiento = false;
 	}
 
 	public ObjectId getId() {
@@ -102,6 +106,14 @@ public class Bike extends BikesObject {
     
     public void setAvailable(Boolean available) {
         this.available = available;
+    }
+    
+    public Boolean getMantenimiento() {
+        return mantenimiento;
+    }
+    
+    public void setMantenimiento(Boolean available) {
+        this.mantenimiento = available;
     }
     
     

@@ -162,6 +162,9 @@ public class RentalDAO {
 				client.setSuspendAfter(null);
 				datastore.save(client);
 				
+				if(returnInfo.getBoolean("mantenimiento")) {
+					rental.getBike().setMantenimiento(true);
+				}
 				
 				rental.getBike().setAvailable(true);
 				rental.getBike().setReserve(false);

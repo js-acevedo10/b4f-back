@@ -77,7 +77,7 @@ public class BikeResource {
 	
 	@PUT
 	@Path("/{bikeId}")
-	@RolesAllowed(Roles.ADMIN)
+	@RolesAllowed({Roles.ADMIN, Roles.MANAGER})
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response editBike(@PathParam("bikeId") String bikeId,Bike bike)  {

@@ -83,6 +83,7 @@ public class BikeTypeDAO {
 			String error = g.toJson(jsonMap);
 			return ResponseBiker.buildResponse(error, Response.Status.NOT_FOUND);
 		} else {
+			bikeType.setId(resultBikeType.getId());
 			datastore.save(bikeType);
 			return ResponseBiker.buildResponse(bikeType, Response.Status.OK);
 		}

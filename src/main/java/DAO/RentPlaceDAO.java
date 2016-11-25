@@ -65,7 +65,6 @@ public class RentPlaceDAO {
 	
 	public static Response editRentPlace(RentPlace place) {
 		Datastore datastore = BikesDB.getDatastore();
-		System.out.println("hola - " + place.getId());
 		RentPlace resultBike = datastore.get(RentPlace.class, place.getId());
 		if (resultBike == null) {
 			jsonMap.clear();
@@ -73,6 +72,7 @@ public class RentPlaceDAO {
 			String error = g.toJson(jsonMap);
 			return ResponseBiker.buildResponse(error, Response.Status.NOT_FOUND);
 		} else {
+			place.setId(resultBike.getId());
 			datastore.save(place);
 			return ResponseBiker.buildResponse(place, Response.Status.OK);
 		}

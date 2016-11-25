@@ -105,8 +105,6 @@ public class BikeDAO {
 			datastore.save(bike);
 			return ResponseBiker.buildResponse(bike, Response.Status.OK);
 		}
-		
-		
 	}
 	
 	public static Response deleteBike(String bikeId) {

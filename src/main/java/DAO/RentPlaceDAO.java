@@ -73,6 +73,7 @@ public class RentPlaceDAO {
 			return ResponseBiker.buildResponse(error, Response.Status.NOT_FOUND);
 		} else {
 			place.setId(resultBike.getId());
+			place.setBikes(resultBike.getBikes());
 			datastore.save(place);
 			return ResponseBiker.buildResponse(place, Response.Status.OK);
 		}
